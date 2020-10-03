@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const gravatar = require("gravatar");
 const jwt = require("jsonwebtoken");
 const secretKey = require("../../config/keys").secretOrKey;
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 const User = require("../../models/User");
 const passport = require("passport");
@@ -21,12 +23,19 @@ router.get("/test", (req, res) => {
 //@desc Register Users
 //@access Public
 router.post("/register", (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   User.findOne({
     email: req.body.email,
   })
     .then((user) => {
       if (user) {
-        res.status(400).json({ email: "Email already Exists" });
+        errors.email = "User already exists";
+        res.status(400).json(errors);
       } else {
         const avatar = gravatar.url(req.body.email, {
           s: "200",
@@ -36,7 +45,7 @@ router.post("/register", (req, res) => {
         const newUser = new User({
           name: req.body.name,
           email: req.body.email,
-          avatar,
+          displayPicture: avatar,
           password: req.body.password,
         });
         bcrypt.genSalt(10, (err, salt) => {
@@ -57,19 +66,27 @@ router.post("/register", (req, res) => {
 //@route POST api/users/login
 //@desc Login Users
 //@access Public
+
 router.post("/login", (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   User.findOne({
     email: req.body.email,
   }).then((user) => {
     if (!user) {
-      res.status(404).json({ email: "User not found" });
+      errors.email = "User not found";
+      res.status(404).json(errors);
     } else {
       bcrypt.compare(req.body.password, user.password).then((matched) => {
         if (matched) {
           const payload = {
             id: user.id,
             name: user.name,
-            avatar: user.avatar,
+            displayPicture: user.displayPicture,
           };
 
           jwt.sign(payload, secretKey, { expiresIn: 7200 }, (err, token) => {
@@ -97,7 +114,7 @@ router.get(
       id: req.user.id,
       name: req.user.name,
       email: req.user.email,
-      avatar: req.user.avatar,
+      displayPicture: req.user.displayPicture,
     });
   }
 );
