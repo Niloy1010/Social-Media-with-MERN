@@ -8,8 +8,11 @@ const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
 const passport = require("passport");
 require("./config/passport")(passport);
+var cors = require('cors')
 
 const app = express();
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

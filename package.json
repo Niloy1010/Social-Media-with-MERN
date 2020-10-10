@@ -4,15 +4,19 @@
   "description": "Social Network for Conestoga Students",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "npm install --prefix client",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "social": "concurrently \"npm run server\" \"npm run client\" "
   },
   "author": "Biozid Rahman Niloy",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
     "create-react-app": "^3.4.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

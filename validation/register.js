@@ -25,7 +25,7 @@ const validateRegisterInput = (data) => {
     errors.password = "Password must be atleast 6 characters";
   }
   if (Validator.isEmpty(data.cpassword)) {
-    errors.password = "Please Re-enter password";
+    errors.cpassword = "Please Re-enter password";
   }
 
   return {
