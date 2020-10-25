@@ -7,7 +7,7 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const Post = require('../../models/Posts');
 const { findOneAndUpdate } = require("../../models/Profile");
-const validatePostInput = require('../../validation/post')
+const validatePostInput = require('../../validation/post');
 //@route GET api/Posts/test
 //@desc TESTS Posts route
 //@access Public
@@ -17,22 +17,24 @@ router.get("/test", (req, res) => {
   });
 });
 
-//@route POST api/Posts
+//@route POST api/posts
 //@desc create Posts
 //@access Private
 router.post('/',passport.authenticate('jwt', {session: false}), (req,res)=> {
+  console.log(req.user);
   const {errors, isValid} = validatePostInput(req.body);
   if(!isValid) {
     return res.status(400).json(errors);
   }
   const newPost = new Post({
     text: req.body.text,
-    name: req.body.name,
-    avatar: req.body.avatar,
+    name: req.user.name,
+    displayPicture: req.user.displayPicture,
     user: req.user.id
   })
 
   newPost.save().then(post=> {
+    console.log(post);
     res.json(post)
   })
   .catch(err=> res.status(400).json({post: "Cannot post"}));
@@ -73,22 +75,27 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), (req,res)=
   Profile.findOne({user: req.user.id}).then(profile=> {
     Post.findById(req.params.id).then(post=> {
       if(post.user.toString() !==req.user.id) {
-        return res.json(401).json({
+        return res.status(401).json({
           notAuthorized: "User not authorized"
         })
       }
-      post.remove().then({status: "success"})
+      post.remove()
+      .then(()=> {
+        res.json({status: "Success"});
+      })
       .catch(err=> res.status(400).json({
-        status: "failed to delete"
+        status: "failed to delete",
+        error : err
       }))
     })
+    .catch(err=> res.status(400).json({status: "could not find post"}))
   })
   .catch(err=> res.status(404).json({error: "User not found"}));
 })
 
 
 //@route Update api/posts/:id
-//@desc delete single post
+//@desc update single post
 //@access private
 router.put('/:id', passport.authenticate('jwt',{session: false}), (req,res)=> {
   Profile.findOne({user: req.user.id}).then(profile=> {
@@ -98,10 +105,7 @@ router.put('/:id', passport.authenticate('jwt',{session: false}), (req,res)=> {
       }
       Post.findOneAndUpdate({_id : req.params.id}, {text: req.body.text}, {upsert: true,useFindAndModify: false})
       .then(post=> {
-        res.json({
-          status: "updated",
-          oldPost: post
-        })
+        res.json(post)
       })
       .catch(err=> res.status(400).json(err))
     })
@@ -117,7 +121,6 @@ router.put('/:id', passport.authenticate('jwt',{session: false}), (req,res)=> {
 //@desc add like to post
 //@access private
 router.post('/like/:id', passport.authenticate('jwt',{session: false}), (req,res)=> {
-  console.log(req.params.id)
   if(req.params && req.params.id) {   
     Post.findById(req.params.id).then(post=> {
     if(post.likes.filter(like => like.user.toString() == req.user.id).length>0) {
@@ -163,17 +166,17 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
   if(!isValid) {
     return res.status(400).json(errors);
   }
-  const newPost = new Post({
-    text: req.body.text,
-    name: req.body.name,
-    avatar: req.body.avatar,
-    user: req.user.id
-  })
+  // const newPost = new Post({
+  //   text: req.body.text,
+  //   name: req.body.name,
+  //   avatar: req.body.avatar,
+  //   user: req.user.id
+  // })
   Post.findById(req.params.id).then(post=> {
     const newComment = {
       text: req.body.text,
       name: req.body.name,
-      avatar: req.body.avatar,
+      displayPicture: req.body.displayPicture,
       user: req.user.id
     };
     post.comments.unshift(newComment);

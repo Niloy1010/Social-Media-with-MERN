@@ -39,7 +39,7 @@ router.post(
       profileData.skills = req.body.skills.split(",");
 
     if (req.body.facebook) profileData.social.facebook = req.body.facebook;
-    if (req.body.twitter) profileData.social.twitter = req.body.twitter;
+    if (req.body.instagram) profileData.social.instagram = req.body.instagram;
     if (req.body.youtube) profileData.social.youtube = req.body.youtube;
     if (req.body.linkedin) profileData.social.linkedin = req.body.linkedin;
 
@@ -50,7 +50,7 @@ router.post(
         if (!profile) {
           Profile.findOne({ handle: req.body.handle }).then((profile) => {
             if (profile) {
-              errors.handle("Profile handle already exists");
+              errors.handle="Profile handle already exists";
               return res.status(400).json(errors.handle);
             }
             new Profile(profileData).save().then((profile) => {
@@ -94,7 +94,7 @@ router.get(
   (req, res) => {
     console.log(req.user);
     Profile.findOne({ user: req.user.id })
-      .populate("user", ["name", "avatar"])
+      .populate("user", ["name", "displayPicture"])
       .then((profile) => {
         if (profile) {
           res.json(profile);
@@ -114,6 +114,8 @@ router.get("/handle/:handle", (req, res) => {
   Profile.findOne({
     handle: req.params.handle,
   })
+  
+  .populate("user", ["name", "displayPicture"])
     .then((profile) => {
       if (!profile) {
         errors.noProfile = "No profile found";
@@ -148,7 +150,7 @@ router.get("/id/:id", (req, res) => {
 router.get("/all", (req, res) => {
   errors = {};
   Profile.find()
-    .populate("user", ["name", "avatar"])
+    .populate("user", ["name", "displayPicture"])
     .then((profiles) => {
       if (!profiles) {
         errors.noprfiles = "No profiles here";
@@ -183,6 +185,7 @@ router.post(
           to: req.body.to,
           current: req.body.current,
           description: req.body.description,
+          current: req.body.current
         };
 
         profile.experience.unshift(exp);

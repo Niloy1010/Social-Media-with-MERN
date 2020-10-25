@@ -89,7 +89,7 @@ router.post("/login", (req, res) => {
             displayPicture: user.displayPicture,
           };
 
-          jwt.sign(payload, secretKey, { expiresIn: 7200 }, (err, token) => {
+          jwt.sign(payload, secretKey, { expiresIn: "2h" }, (err, token) => {
             res.json({
               success: "true",
               token: "Bearer " + token,

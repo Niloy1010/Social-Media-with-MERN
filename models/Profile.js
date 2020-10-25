@@ -6,6 +6,9 @@ const profileSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "users",
   },
+  current: {
+    type: Boolean
+  },
   handle: {
     type: String,
     required: true,
@@ -94,7 +97,7 @@ const profileSchema = new Schema({
   social: {
     facebook: { type: String },
     linkedin: { type: String },
-    twitter: { type: String },
+    instagram: { type: String },
     youtube: { type: String },
   },
   date: {

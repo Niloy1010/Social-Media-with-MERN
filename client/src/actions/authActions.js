@@ -39,11 +39,13 @@ export const loginUser = (userData) =>dispatch => {
                     payload: err.response.data
                 })
   })
-}
+};
+
 
 
 //Log user out
 export const logoutUser = ()=> dispatch => {
+  console.log("remove Localstorage");
   //remove token from localstorage
   localStorage.removeItem('jwtToken');
   //remove auth header for future request
