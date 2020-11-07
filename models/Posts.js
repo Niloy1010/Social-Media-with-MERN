@@ -17,13 +17,26 @@ const postSchema = new Schema({
     displayPicture : {
         type: String
     },
+    Date : {
+        type: Date,
+        default: Date.now
+    },
     likes: [
         {
             user: {
                 type: Schema.Types.ObjectId,
                 ref: 'users' 
             },
-            name: String
+            name: {
+                type: String
+            },
+            displayPicture: {
+                type: String
+            },
+            Date : {
+                type: Date,
+                default: Date.now
+            }
         }
     ],
     comments: [

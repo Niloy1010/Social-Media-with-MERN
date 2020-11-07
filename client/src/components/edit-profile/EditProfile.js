@@ -9,6 +9,7 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import {createProfile, getCurrentProfile} from '../../actions/profileActions';
 import {withRouter, Link} from 'react-router-dom';
 import isEmpty from '../../validation/is-empty';
+import axios from 'axios';
 
 class EditProfile extends Component {
 
@@ -27,7 +28,8 @@ class EditProfile extends Component {
             linkedin:'',
             youtube:'',
             instagram:'',
-            errors: {}
+            errors: {},
+            image_file: null,
         }
     }
 
@@ -77,6 +79,28 @@ class EditProfile extends Component {
         this.props.getCurrentProfile();
     }
 
+    handleImagePreview = (e) => {
+        let image_as_files = e.target.files[0];
+
+        this.setState({
+            image_file: image_as_files,
+        })
+    }
+
+    imageSubmit = (e) => {
+        e.preventDefault();
+        if (this.state.image_file !== null){
+            let formData = new FormData();
+            formData.append('file', this.state.image_file);
+            axios.post('/api/users/profilepicture', formData)
+            .then((res)=> {
+                this.props.history.push('/dashboard');
+            })
+        }
+       
+        
+    }
+
     onSubmit = (e) =>  {
         e.preventDefault();
         const profileData = {
@@ -117,6 +141,9 @@ class EditProfile extends Component {
         if(displaySocialInputs) {
             socialInputs = (
                 <div>
+
+               
+
                     <InputGroup 
                     placeholder="Facebook Profile URL"
                     name="facebook"
@@ -164,6 +191,18 @@ class EditProfile extends Component {
                         <div className="col-md-8 m-auto">
                             <Link to="/dashboard" className="btn btn-light">Go back to dashboard</Link>
                             <h1 className="display-4 text-center">Edit profile</h1>
+                            <form onSubmit={this.imageSubmit} method="POST" encType="multipart/form-data">
+                    <div className="custom-file mb-3">
+                        <label for="file">Choose File</label>
+                        <input
+                         type="file"
+                          name="file"
+                           id="file"
+                           onChange={this.handleImagePreview}
+                           />
+                        <input type="submit" value="submit" className="btn btn-primary" />
+                    </div>
+                </form>
                             <form onSubmit={this.onSubmit}>
                                 <TextFieldGroup
                                 placeholder="*Profile Handle"

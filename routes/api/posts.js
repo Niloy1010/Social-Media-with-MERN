@@ -6,7 +6,6 @@ const passport = require("passport");
 const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const Post = require('../../models/Posts');
-const { findOneAndUpdate } = require("../../models/Profile");
 const validatePostInput = require('../../validation/post');
 //@route GET api/Posts/test
 //@desc TESTS Posts route
@@ -126,9 +125,39 @@ router.post('/like/:id', passport.authenticate('jwt',{session: false}), (req,res
     if(post.likes.filter(like => like.user.toString() == req.user.id).length>0) {
       return res.status(400).json({alreadyLiked: "User already liked this post"});
     }
-    post.likes.unshift({user: req.user.id});
-    post.save().then(post=> res.json(post))
-    .catch(err=> res.status(400).json(err))
+    post.likes.unshift({
+      user: req.user.id,
+      name: req.body.name,
+      displayPicture: req.body.displayPicture
+    });
+    User.findById(post.user).then(user=> {
+      if(user.notifications.
+      filter(notification=> notification.senderId.toString() === req.user.id && notification.type==="Like").length>0){
+        console.log("In here");
+        user.save().then(()=> {
+          post.save().then(post=> res.json(post))
+          .catch(err=> res.status(400).json(err))
+        })
+      }
+      else{
+        user.notifications.push({
+          senderName: req.user.name,
+          senderId: req.user.id,
+          postId: req.params.id,
+          type: "Like",
+          text: req.user.name + " liked your post",
+          read: false
+        })
+        user.save().then(()=> {
+          post.save().then(post=> res.json(post))
+          .catch(err=> res.status(400).json(err))
+        })
+      }
+      
+     
+    })
+    .catch(err=> res.status(400).json({notFound: "User not found"}));
+   
   })
   .catch(err=> res.status(404).json({notfound: "Post not found"}))
 }
@@ -179,11 +208,26 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
       displayPicture: req.body.displayPicture,
       user: req.user.id
     };
-    post.comments.unshift(newComment);
-    post.save().then(post=> {
-      res.json(post);
+    User.findById(post.user).then(user=> {
+      user.notifications.push({
+        senderName: req.user.name,
+        senderId: req.user.id,
+        postId: req.params.id,
+        type: "Comment",
+        text: req.user.name + " commented on your post",
+        read: false
+      })
+      user.save().then(()=> {
+        post.comments.unshift(newComment);
+        post.save().then(post=> {
+          res.json(post);
+        })
+        .catch(err=> res.status(400).json({error: "cannot comment"}));
+      })
     })
-    .catch(err=> res.status(400).json({error: "cannot comment"}));
+    .catch(err=> res.status(400).json({"error": "User not found"}))
+
+
   })
   .catch(err=> res.status(404).json({notFound: "Post not found"}))
 })

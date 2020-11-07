@@ -37,7 +37,7 @@ class SinglePost extends Component {
             <div className="row">
             <div className="col-md-4">
                 <a href="">
-                    <img src={post.displayPicture} className="rounded-circle d-none d-md-block" alt=""/>
+                    <img src={post.displayPicture} width="200px" height="200px" className="rounded-circle d-none d-md-block" alt=""/>
                 </a>
                 <br></br>
             </div>

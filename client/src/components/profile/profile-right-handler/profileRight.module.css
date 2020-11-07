@@ -1,0 +1,21 @@
+.btnSelected {
+  color: black;
+  border-bottom: 2px solid black;
+  /* background-color: #f9fbf2; */
+}
+.btnUnselected {
+  color: black;
+  /* background-color: #3da5d9; */
+}
+.cardbio {
+  min-height: 350px;
+  border: white;
+}
+
+.toggleButton:hover {
+  cursor: pointer;
+}
+.largeIcon {
+  width: 60;
+  height: 60;
+}

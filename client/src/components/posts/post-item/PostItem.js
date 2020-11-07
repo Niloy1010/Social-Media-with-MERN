@@ -6,14 +6,15 @@ import {Link} from 'react-router-dom';
 import Posts from '../Posts';
 import {deletePost, addLike,removeLike} from '../../../actions/postActions';
 import CommentFeed from '../../post/Comment/comment-feed/CommentFeed';
+import styles from './postItem.module.css';
 
 class PostItem extends Component {
 
     onDeleteClick = (id) => {
         this.props.deletePost(id);
     }
-    onLikeClick = (id) =>  {
-        this.props.addLike(id);
+    onLikeClick = (id,newLike) =>  {
+        this.props.addLike(id,newLike);
     }
     onUnlikeClick = (id) => {
         this.props.removeLike(id);
@@ -31,6 +32,10 @@ class PostItem extends Component {
     render() {
 
         const {post, auth} = this.props;
+        const newLike = {
+            name: auth.user.name,
+            displayPicture: auth.user.displayPicture
+        }
 
         return (
             <div>
@@ -50,17 +55,17 @@ class PostItem extends Component {
                         </p>
                         
                 <hr></hr>
-                        <button onClick={this.onLikeClick.bind(this,post._id)} type="button" className="btn btn-light mr-1">
-                            <i className={classnames('fa fa-thumbs-up',{
-                                'text-info' : this.findUserLike(post.likes)
-                            })}></i>
+                        <button onClick={this.onLikeClick.bind(this,post._id,newLike)} type="button" className="btn btn-light mr-1">
+                            <i className={
+                                this.findUserLike(post.likes) ? `fa fa-thumbs-up ${styles.thumbBtn} ` : `fa fa-thumbs-up`
+                               }></i>
                             <span className="badge badge-light">{post.likes.length}</span>
                         </button>
                         <button onClick={this.onUnlikeClick.bind(this,post._id)} type="button" className="btn btn-light mr-1">
-                            <i className="text-info fa fa-thumbs-down"></i>
+                            <i className=" fa fa-thumbs-down"></i>
                             <span className="badge badge-light"></span>
                         </button>
-                        <Link to={`/post/${post._id}`} className="btn btn-info mr-1">Comments</Link>
+                        <Link to={`/post/${post._id}`} className={`${styles.commentBtn} btn btn-info mr-1`}>Comments</Link>
                        
                 <hr></hr>
                     </div>
@@ -68,7 +73,7 @@ class PostItem extends Component {
                     <div className="col-md-2">
                     {post.user === auth.user.id ? (
                             <button onClick={this.onDeleteClick.bind(this,post._id)} type="button" className="btn btn-danger mr-1">
-                                Delete &nbsp;<i className="fa fa-times"></i>
+                                Delete &nbsp;<i className={`fa fa-times `}></i>
                                 </button>
                         ) : null}
                     </div>

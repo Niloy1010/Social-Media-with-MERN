@@ -21,6 +21,39 @@ const userSchema = new Schema({
     type: String,
     default: Date.now(),
   },
+  notifications: [
+    {
+      senderName: {
+        type: String,
+        required:true
+      },
+      senderId: {
+        type: Schema.Types.ObjectId,
+        ref: 'users' 
+      },
+      postId: {
+        type: Schema.Types.ObjectId,
+        ref: 'posts' 
+      },
+      type: {
+        type: String,
+        required: true
+      },
+      read: {
+        type: Boolean
+      },
+      text: {
+        type: String,
+        required: true
+      },
+      date:{
+        type: Date,
+        default: Date.now()
+      }
+
+
+    }
+  ]
 });
 
 const User = mongoose.model("users", userSchema);

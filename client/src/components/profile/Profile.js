@@ -4,10 +4,13 @@ import {Link} from 'react-router-dom';
 import ProfileHeader from './profile-header/ProfileHeader'
 import ProfileAbout from './profile-about/ProfileAbout'
 import ProfileCreds from './profile-creds/ProfileCreds'
-import ProfileGithub from './profile-github/ProfileGithub';
 import Spinner from '../common/Spinner';
 import {connect} from 'react-redux';
 import {getProfileByHandle} from '../../actions/profileActions';
+
+
+import ProfileLeft from './profile-left-handler/ProfileLeft';
+import ProfileRight from './profile-right-handler/ProfileRight';
 
 class Profile extends Component {
     constructor(props) {
@@ -15,14 +18,14 @@ class Profile extends Component {
         this.state = {};
     }
 
-    static getDerivedStateFromProps(nextProps,prevState){
+    // static getDerivedStateFromProps(nextProps,prevState){
         
-        if(nextProps.profile.profile === null && nextProps.profile.loading) {
-            nextProps.history.push('/not-found');
+    //     if(nextProps.profile.profile === null && nextProps.profile.loading) {
+    //         nextProps.history.push('/not-found');
          
-        }
-        return null;
-    }
+    //     }
+    //     return null;
+    // }
 
     // componentWillReceiveProps(nextProps) {
     //     console.log("not found check");
@@ -42,37 +45,29 @@ class Profile extends Component {
         
     
         const {profile,loading} = this.props.profile;
+        const {auth} = this.props;
         let profileContent ; 
         if(profile === null || loading) {
             profileContent = <Spinner />
         }
         else{
             profileContent = (
-                <div>
+                <div className="mt-4">
                     <div className="row">
-                        <div className="col-md-6">
-                            <Link to="/profiles" className="btn btn-light mb-3 float-left">
-                                Back to Profiles
-                            </Link> 
+                        <div className="col-md-4">
+                            <ProfileLeft profile={profile} auth = {auth} />
                         </div>
-                        <div className="col-md-6"></div>
+                        <div className="col-md-8">
+                            <ProfileRight profile={profile} auth = {auth}/>
+                        </div>
                     </div>
-
-                    <ProfileHeader profile={profile} />
-                    <ProfileAbout profile={profile} />
-                    <ProfileCreds education={profile.education} experience={profile.experience} />
                 </div>
             )
         }
         return (
             <div className="profile">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            {profileContent}
-                        </div>
-                    </div>
-                </div>
+            {profileContent}
+                    
             </div>
         )
     }
@@ -85,7 +80,8 @@ Profile.propTypes = {
 
 const mapStateToProps = (state) => (
    { 
-       profile: state.profile
+       profile: state.profile,
+       auth: state.auth
     }
 )
 export default connect(mapStateToProps,{getProfileByHandle})(Profile);

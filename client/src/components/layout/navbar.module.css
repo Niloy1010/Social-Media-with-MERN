@@ -1,0 +1,23 @@
+.myNavbar {
+  display: flex;
+  background-color: #011936;
+}
+.logo {
+  flex: 2;
+}
+.item {
+  flex: 1;
+  text-align: center;
+}
+.item:hover {
+  cursor: pointer;
+  background-color: #6c757d73;
+}
+.search {
+  flex: 2;
+  text-align: right;
+}
+.myNavbar svg {
+  color: #f9fbf2;
+  height: 60;
+}

@@ -79,8 +79,8 @@ export const getPost = (id) => dispatch => {
 }
 
 //Add like
-export const addLike = id => dispatch => {
-    axios.post(`/api/posts/like/${id}`)
+export const addLike = (id,userLike) => dispatch => {
+    axios.post(`/api/posts/like/${id}`,userLike)
     .then(res => dispatch(getPosts()))
     .catch(err=> 
         {
@@ -92,8 +92,8 @@ export const addLike = id => dispatch => {
 }
 
 //Add like to single post
-export const addLikeSinglePost = id => dispatch => {
-    axios.post(`/api/posts/like/${id}`)
+export const addLikeSinglePost = (id,userLike) => dispatch => {
+    axios.post(`/api/posts/like/${id}`,userLike)
     .then(res => dispatch(getPost(id)))
     .catch(err=> 
         {

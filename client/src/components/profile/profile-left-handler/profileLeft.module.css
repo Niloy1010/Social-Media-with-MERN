@@ -1,0 +1,44 @@
+.imageHolder {
+  background-color: transparent;
+}
+.card-bg {
+  background-color: #f9fbf2;
+  color: black;
+}
+.mybtn {
+  background-color: #3da5d9;
+  color: black;
+  font-weight: 500;
+}
+.socialLink {
+  position: relative;
+  display: inline-block;
+}
+.socialLink::after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  border-bottom: 2px solid black;
+  top: 15px;
+  width: 150%;
+  left: 100%;
+  margin-left: 10px;
+}
+
+.skillink {
+  position: relative;
+  display: inline-block;
+}
+.skillink::after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  border-bottom: 2px solid black;
+  top: 15px;
+  width: 350%;
+  left: 100%;
+  margin-left: 10px;
+}
+.mylink {
+  color: #3da5d9;
+}

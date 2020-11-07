@@ -4,64 +4,80 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {logoutUser} from '../../actions/authActions';
 import {clearCurrentProfile} from '../../actions/profileActions';
+import styles from './navbar.module.css';
+import MessageIcon from '@material-ui/icons/Message';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import GroupIcon from '@material-ui/icons/Group';
+import HomeIcon from '@material-ui/icons/Home';
+import {getCurrentProfile} from '../../actions/profileActions';
+import isEmpty from '../../validation/is-empty'
 
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            handle : null
+        }
+    }
 
     onLogoutClick= (e) => {
         e.preventDefault();
         this.props.clearCurrentProfile();
         this.props.logoutUser();
     }
+    static getDerivedStateFromProps(props,state) {
+        return state;
+    }
+    componentDidMount() {
+        this.props.getCurrentProfile();
+     
+    }
     render() {
-
+        const {profile} = this.props;
+        
+        const handle = profile.profile ? profile.profile.handle : null;
+        console.log(handle);
         const {isAuthenticated, user} = this.props.auth;
 
         const authLinks = (
-                    <ul className="navbar-nav">
-                        <li className="nav-item active">
-                    <Link className="nav-link" to="/dashboard">Dashboard <span className="sr-only">(current)</span></Link>
-                    </li>
+            <div className={`${styles.myNavbar} pt-2 pb-2 mb-5`}>
+            <div className={`${styles.logo}`}>1</div>
+        <Link to="/posts" className={styles.item}> <HomeIcon /></Link>
+           
 
-                    <li className="nav-item active">
-                    <Link className="nav-link" to="/profiles">Developers <span className="sr-only">(current)</span></Link>
-                    </li>
-                    <li className="nav-item active">
-                    <Link className="nav-link" to="/posts">Post Feed <span className="sr-only">(current)</span></Link>
-                    </li>
-                        <li className="nav-item">
-                            <a href="#" onClick={this.onLogoutClick} className="nav-link">
+            <Link className={styles.item} to={{
+                pathname: `/profile/${handle}`,
+                state: {
+                    profile:this.props.profile,
+                    auth: this.props.auth
+                }
+            }}
+            
+            ><AccountCircleIcon /></Link>
+            <div className={styles.item}><NotificationsIcon /></div>
+            <div className={styles.item}><GroupIcon /></div>
+            <div className={styles.item}><MessageIcon /></div>
+            <div className={styles.search}><a href="#" onClick={this.onLogoutClick} className="nav-link">
                                 <img src={user.displayPicture} alt={user.name}
                                 className="rounded-circle"
                                 title="Gravatar Image"
                                 style={{width:'25px', marginRight:'5px'}}
                                 />
                                 Logout
-                            </a>
-                        </li>
-                        </ul>
+                            </a></div>
+            
+        </div>
         );
-        const guestLinks = (
-            <ul className="navbar-nav">
-                <li className="nav-item active">
-                    <Link className="nav-link" to="/register">Sign Up <span className="sr-only">(current)</span></Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to="/login">Login</Link>
-                </li>
-                </ul>
-            );
+      
 
         return (
             <div>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <Link className="navbar-brand" to="/">Social Media</Link>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        {isAuthenticated ? authLinks : guestLinks}
+                
+               
+                    <div>
+                        {isAuthenticated ? authLinks : null}
                     </div>
-                </nav>
             </div>
         )
     }
@@ -73,7 +89,8 @@ Navbar.propTypes = {
 }
 
 const mapStateToProps = (state)=>({
-    auth : state.auth
+    auth : state.auth,
+    profile: state.profile
 })
 
-export default connect(mapStateToProps, {logoutUser,clearCurrentProfile})(Navbar);
+export default connect(mapStateToProps, {logoutUser,clearCurrentProfile, getCurrentProfile})(Navbar);

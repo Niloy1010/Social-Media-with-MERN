@@ -11,7 +11,7 @@ import Moment from 'react-moment';
                 <Moment format="YYYY/MM/DD">{exp.from}</Moment> - 
                 {exp.to === null ? (' Now ') : ( <Moment format="YYYY/MM/DD">{exp.to}</Moment>)}
             </p>
-            <p><storng>Position: </storng>{exp.title}</p>
+            <p><strong>Position: </strong>{exp.title}</p>
             <p>
                 {exp.location === '' ? null : (<span><strong>Location: </strong>{exp.location}</span>)}
             </p>

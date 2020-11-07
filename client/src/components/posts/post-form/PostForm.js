@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import TextAreaFieldGroup from '../../common/TextAreaFieldGroup';
 import {addPost} from '../../../actions/postActions';
+import styles from './postForm.module.css';
 
 class PostForm extends Component {
 
@@ -49,7 +50,7 @@ class PostForm extends Component {
             <div>
                 <div className="post-form mb-3">
                     <div className="card card-info">
-                        <div className="card-header bg-info text-white">
+                        <div className={`${styles.formHead} card-header  text-white`}>
                             Say Something...
                         </div>
                         <div className="card-body">

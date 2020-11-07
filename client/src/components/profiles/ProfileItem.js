@@ -4,12 +4,12 @@ import isEmpty from '../../validation/is-empty';
 const ProfileItem = (props)=> {
     const {profile} = props;
     console.log(profile);
-    console.log(profile.user.displayPicture);
+  //  console.log(profile.user.displayPicture);
     return (
         <div className="card card-body bg-light mb-3">
             <div className="row">
                 <div className="col-4">
-                    <img src={profile.user.displayPicture} alt="" className="rounded-circle"/>
+                <img src={profile.user.displayPicture} width="100px" height="100px" alt="" className="rounded-circle"/>
                 </div>
                 <div className="col-md-4 col-8 text-md-left text-center">
                     <h3>{profile.user.name}</h3>
