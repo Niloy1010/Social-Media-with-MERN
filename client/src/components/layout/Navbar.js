@@ -11,7 +11,10 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GroupIcon from '@material-ui/icons/Group';
 import HomeIcon from '@material-ui/icons/Home';
 import {getCurrentProfile} from '../../actions/profileActions';
-import isEmpty from '../../validation/is-empty'
+import {getCurrentUser} from '../../actions/authActions';
+import isEmpty from '../../validation/is-empty';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+
 
 class Navbar extends Component {
     constructor(props) {
@@ -31,13 +34,15 @@ class Navbar extends Component {
     }
     componentDidMount() {
         this.props.getCurrentProfile();
+        this.props.getCurrentUser();
+        
+        
      
     }
     render() {
         const {profile} = this.props;
         
         const handle = profile.profile ? profile.profile.handle : null;
-        console.log(handle);
         const {isAuthenticated, user} = this.props.auth;
 
         const authLinks = (
@@ -55,14 +60,14 @@ class Navbar extends Component {
             }}
             
             ><AccountCircleIcon /></Link>
-            <div className={styles.item}><NotificationsIcon /></div>
+<Link to="/notifications" className={styles.item}>{user.hasNotification ? <NotificationsActiveIcon /> : <NotificationsIcon />}</Link>
             <div className={styles.item}><GroupIcon /></div>
             <div className={styles.item}><MessageIcon /></div>
             <div className={styles.search}><a href="#" onClick={this.onLogoutClick} className="nav-link">
                                 <img src={user.displayPicture} alt={user.name}
                                 className="rounded-circle"
                                 title="Gravatar Image"
-                                style={{width:'25px', marginRight:'5px'}}
+                                style={{width:'30px', marginRight:'5px'}}
                                 />
                                 Logout
                             </a></div>
@@ -90,7 +95,7 @@ Navbar.propTypes = {
 
 const mapStateToProps = (state)=>({
     auth : state.auth,
-    profile: state.profile
+    profile: state.profile,
 })
 
-export default connect(mapStateToProps, {logoutUser,clearCurrentProfile, getCurrentProfile})(Navbar);
+export default connect(mapStateToProps, {logoutUser,clearCurrentProfile, getCurrentProfile,getCurrentUser})(Navbar);

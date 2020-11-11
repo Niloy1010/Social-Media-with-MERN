@@ -2,7 +2,8 @@ import axios from 'axios';
 import {GET_ERRORS} from './types';
 import setAuthToken from '../utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
-import {SET_CURRENT_USER} from './types'
+import {SET_CURRENT_USER,SET_CURRENT_USER_NOTIFICATION} from './types'
+
 
 
 //ACTION CREATOR
@@ -64,3 +65,15 @@ export const setCurrentUser = (decoded) => {
     payload: decoded
   }
 }
+
+
+//get logged in user state
+export const getCurrentUser = () => dispatch => {
+  axios.get('/api/users/current').then(user=> {
+    return dispatch ({
+      type: SET_CURRENT_USER,
+      payload: user.data
+    })
+  })
+}
+

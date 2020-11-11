@@ -1,5 +1,7 @@
 export const GET_ERRORS = 'GET_ERRORS';
+export const SET_ERRORS_NULL = "SET_ERRORS_NULL";
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 
 //Profile Actions
 export const GET_PROFILE = "GET_PROFILE";
@@ -14,3 +16,9 @@ export const GET_POSTS = "GET_POSTS";
 export const GET_POST = "GET_POST";
 export const ADD_POST = "ADD_POST";
 export const DELETE_POST = "DELETE_POST";
+export const ADD_IMAGE_POST = "ADD_IMAGE_POST"
+
+//Notification Actions
+export const GET_NOTIFICATION = "GET_NOTIFICATION";
+export const CHANGE_NOTIFICATION = "CHANGE_NOTIFICATION";
+export const SET_CURRENT_USER_NOTIFICATION = "SET_CURRENT_USER_NOTIFICATION";

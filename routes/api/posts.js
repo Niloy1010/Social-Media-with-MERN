@@ -7,6 +7,52 @@ const User = require("../../models/User");
 const Profile = require("../../models/Profile");
 const Post = require('../../models/Posts');
 const validatePostInput = require('../../validation/post');
+const validatePostImageInput = require('../../validation/validatePostImageInput');
+
+
+const crypto = require('crypto');
+const path = require('path');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+
+const keys = require("../../config/keys");
+
+const Pusher = require("pusher");
+
+const pusher = new Pusher({
+  appId: "1103725",
+  key: "b0336431ec4d3b049e2c",
+  secret: "7a4078ca0f16e095ed68",
+  cluster: "us2",
+  useTLS: true
+});
+
+
+var storage = new GridFsStorage({
+  url: keys.mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          console.log("Error");
+          return reject(err);
+        }
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
+
+
+
+
 //@route GET api/Posts/test
 //@desc TESTS Posts route
 //@access Public
@@ -20,7 +66,7 @@ router.get("/test", (req, res) => {
 //@desc create Posts
 //@access Private
 router.post('/',passport.authenticate('jwt', {session: false}), (req,res)=> {
-  console.log(req.user);
+  
   const {errors, isValid} = validatePostInput(req.body);
   if(!isValid) {
     return res.status(400).json(errors);
@@ -33,7 +79,38 @@ router.post('/',passport.authenticate('jwt', {session: false}), (req,res)=> {
   })
 
   newPost.save().then(post=> {
-    console.log(post);
+   
+    res.json(post)
+  })
+  .catch(err=> res.status(400).json({post: "Cannot post"}));
+} )
+
+
+
+
+//@route POST api/posts/image
+//@desc create Posts with Image
+//@access Private
+router.post('/image',passport.authenticate('jwt', {session: false}),
+upload.single('file'),
+ (req,res)=> {
+  
+  const {errors, isValid} = validatePostImageInput(req);
+  if(!isValid) {
+    console.log("invalid");
+    return res.status(400).json(errors);
+  }
+  const newPost = new Post({
+    text: req.body.text,
+    name: req.user.name,
+    displayPicture: req.user.displayPicture,
+    user: req.user.id,
+    hasImage: true,
+    image: `http://localhost:5000/api/users/profilepicture/${req.file.id}`
+  })
+
+  newPost.save().then(post=> {
+   
     res.json(post)
   })
   .catch(err=> res.status(400).json({post: "Cannot post"}));
@@ -123,8 +200,17 @@ router.post('/like/:id', passport.authenticate('jwt',{session: false}), (req,res
   if(req.params && req.params.id) {   
     Post.findById(req.params.id).then(post=> {
     if(post.likes.filter(like => like.user.toString() == req.user.id).length>0) {
-      return res.status(400).json({alreadyLiked: "User already liked this post"});
+      console.log("UN");
+      const removeIndex = post.likes.map(item => item.user.toString()).indexOf(req.user.id);
+      post.likes.splice(removeIndex,1);
+      console.log(post.likes);
+      post.save().then(post=> 
+         res.json(post)
+      )
+      .catch(err=> res.status(400).json(err));
+      return ;
     }
+    console.log("OUT");
     post.likes.unshift({
       user: req.user.id,
       name: req.body.name,
@@ -132,12 +218,20 @@ router.post('/like/:id', passport.authenticate('jwt',{session: false}), (req,res
     });
     User.findById(post.user).then(user=> {
       if(user.notifications.
-      filter(notification=> notification.senderId.toString() === req.user.id && notification.type==="Like").length>0){
-        console.log("In here");
+      filter(notification=> notification.postId.toString() === post.id && notification.type==="Like").length>0){
+
+        
         user.save().then(()=> {
           post.save().then(post=> res.json(post))
           .catch(err=> res.status(400).json(err))
         })
+      }
+      else if(user._id.toString()===req.user._id.toString()){
+        user.save().then(()=> {
+          post.save().then(post=> res.json(post))
+          .catch(err=> res.status(400).json({err:"Error"}))
+        })
+        .catch(err=> res.status(400).json({error:"Error"}))
       }
       else{
         user.notifications.push({
@@ -148,6 +242,11 @@ router.post('/like/:id', passport.authenticate('jwt',{session: false}), (req,res
           text: req.user.name + " liked your post",
           read: false
         })
+        user.hasNotification= true;
+        
+        pusher.trigger("notification", "push-notification", {
+          message: "notification"
+        });
         user.save().then(()=> {
           post.save().then(post=> res.json(post))
           .catch(err=> res.status(400).json(err))
@@ -191,7 +290,7 @@ router.post('/unlike/:id', passport.authenticate('jwt', {session: false}),(req,r
 router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req,res)=> {
 
   const {errors, isValid} = validatePostInput(req.body);
-  console.log(errors);
+  
   if(!isValid) {
     return res.status(400).json(errors);
   }
@@ -217,6 +316,11 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
         text: req.user.name + " commented on your post",
         read: false
       })
+      
+      user.hasNotification= true;
+      pusher.trigger("notification", "push-notification", {
+        message: "hello world"
+      });
       user.save().then(()=> {
         post.comments.unshift(newComment);
         post.save().then(post=> {

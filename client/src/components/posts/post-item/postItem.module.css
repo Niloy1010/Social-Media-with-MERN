@@ -1,6 +1,46 @@
 .commentBtn {
-  background-color: #3da5d9;
+  background-color: #14a5ee;
 }
 .thumbBtn {
   color: #3da5d9;
+}
+.mycard {
+  border-radius: 20px;
+}
+.displayBorder {
+}
+.likeCommentDiv {
+  width: 100%;
+  display: flex;
+}
+.likeElement {
+  flex: 1;
+}
+.CommentElement {
+  flex: 1;
+}
+.likeLength {
+  margin-left: 10px;
+  margin-bottom: 5px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid #14a5ee;
+  padding: 4px;
+  text-align: center;
+}
+.nameText {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.postText {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.editDeleteBtn:hover {
+  cursor: progress !important;
+}
+.MuiSvgIcon-root:hover {
+  cursor: pointer;
+  cursor: progress !important;
+  font-size: 1.8rem !important;
 }

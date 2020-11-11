@@ -20,8 +20,15 @@ const path = require('path');
 const multer = require('multer');
 const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-const methodOverride = require('method-override');
+const Pusher = require("pusher");
 
+const pusher = new Pusher({
+  appId: "1103725",
+  key: "b0336431ec4d3b049e2c",
+  secret: "7a4078ca0f16e095ed68",
+  cluster: "us2",
+  useTLS: true
+});
 
 //Connection for file upload
 //Init Stream
@@ -37,15 +44,12 @@ conn.once('open', ()=> {
 var storage = new GridFsStorage({
   url: keys.mongoURI,
   file: (req, file) => {
-    console.log(req);
-    console.log(file);
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
         if (err) {
           console.log("Error");
           return reject(err);
         }
-        console.log(file);
         const filename = buf.toString('hex') + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
@@ -61,13 +65,11 @@ const upload = multer({ storage });
 //@route GET api/users/profilePicture/:id {picture id}
 //@desc loads form
 router.get("/profilepicture/:id", (req,res)=> {
-  console.log(req.params.id);
   gfs.files.findOne({_id:mongoose.Types.ObjectId(req.params.id)})
   .then(file=> {
     if(!file || file.length===0) {
       res.status(404).json({"notFound": "File not found"});
     }
-    console.log(file)
     var readstream = gfs.createReadStream(file.filename);
     readstream.pipe(res);
   })
@@ -134,6 +136,7 @@ router.post("/register", (req, res) => {
           email: req.body.email,
           displayPicture: avatar,
           password: req.body.password,
+          hasNotification
         });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -160,10 +163,13 @@ router.post("/login", (req, res) => {
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
   User.findOne({
     email: req.body.email,
   }).then((user) => {
+    
+    pusher.trigger("notification", "push-notification", {
+      message: "hello world"
+    });
     if (!user) {
       errors.email = "User not found";
       res.status(404).json(errors);
@@ -174,6 +180,8 @@ router.post("/login", (req, res) => {
             id: user.id,
             name: user.name,
             displayPicture: user.displayPicture,
+            hasNotification: user.hasNotification,
+            notifications: [...user.notifications]
           };
 
           jwt.sign(payload, secretKey, { expiresIn: "2h" }, (err, token) => {
@@ -202,6 +210,8 @@ router.get(
       name: req.user.name,
       email: req.user.email,
       displayPicture: req.user.displayPicture,
+      hasNotification: req.user.hasNotification,
+      notifications: [...req.user.notifications]
     });
   }
 );
@@ -215,7 +225,6 @@ router.get(
   "/notifications",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user.id);
    User.findOne({_id: req.user.id})
    .then(user=> {
      res.json(user.notifications);
@@ -225,5 +234,57 @@ router.get(
    })
   }
 );
+
+router.get("/displayPicture/:id", (req,res)=> {
+  User.findOne({_id: req.params.id})
+  .then(user=>
+    res.json({"displayPicture": user.displayPicture}))
+    .catch(err=> res.status(400).json({"error": "error"}))
+})
+
+
+//@route GET api/users/notifications/visited
+//@desc SET current user notification
+router.get(
+  "/notifications/visited",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+   User.findOne({_id: req.user.id})
+   .then(user=> {
+     user.hasNotification = false;
+     user.save().then(resUser=> {
+       res.json(resUser)
+     })
+     .catch(err=> res.status(400).json({error:"User"}))
+   })
+   .catch(err=>{
+     res.status(404).json({notFound:"User not found"})
+   })
+  }
+);
+
+
+
+//@route GET api/users/notifications/visited/:id
+//@desc SET current user notification
+router.get(
+  "/notifications/visited/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+   User.findOne({_id: req.user.id})
+   .then(user=> {
+     
+     user.notifications.map(notification => notification._id.toString() === req.params.id ? notification.read=true : notification.read=notification.read);
+     user.save().then(resUser=> {
+       res.json(resUser)
+     })
+     .catch(err=> res.status(400).json({error:"Error"}))
+   })
+   .catch(err=>{
+     res.status(404).json({notFound:"User not found"})
+   })
+  }
+);
+
 
 module.exports = router;

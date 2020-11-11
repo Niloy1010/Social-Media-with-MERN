@@ -31,13 +31,17 @@ class SinglePost extends Component {
     render() {
 
         const {post, auth} = this.props;
+        let showImage = null;
+        if(post.hasImage) {
+            showImage = <img src={post.image} height="250px" width="250px" />
+        }
 
         const showComment = !isEmpty(post) ? 
         (
             <div className="row">
             <div className="col-md-4">
                 <a href="">
-                    <img src={post.displayPicture} width="200px" height="200px" className="rounded-circle d-none d-md-block" alt=""/>
+                    <img src={post.displayPicture} width="100px" height="100px" className="rounded-circle d-none d-md-block" alt=""/>
                 </a>
                 <br></br>
             </div>
@@ -47,6 +51,7 @@ class SinglePost extends Component {
                 <p className="lead">
                     {post.text}
                 </p>
+                {showImage}
                 <button onClick={this.onLikeClick.bind(this,post._id)} type="button" className="btn btn-light mr-1">
                     <i className={classnames('fa fa-thumbs-up',{
                         'text-info' : this.findUserLike(post.likes)
@@ -86,7 +91,8 @@ SinglePost.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    auth : state.auth
+    auth : state.auth,
+    errors: state.errors
 })
 
 export default  connect(mapStateToProps, {deletePost,addLikeSinglePost,removeLikeSinglePost})(SinglePost);

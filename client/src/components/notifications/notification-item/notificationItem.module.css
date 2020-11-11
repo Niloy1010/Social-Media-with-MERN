@@ -1,0 +1,9 @@
+.checked {
+  background-color: white;
+}
+.unchecked {
+  background-color: gray;
+}
+.notificationItemcss:hover {
+  cursor: pointer;
+}

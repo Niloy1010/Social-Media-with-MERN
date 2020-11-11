@@ -7,6 +7,7 @@ import Posts from '../Posts';
 import {deletePost, addLike,removeLike} from '../../../actions/postActions';
 import CommentFeed from '../../post/Comment/comment-feed/CommentFeed';
 import styles from './postItem.module.css';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 class PostItem extends Component {
 
@@ -36,46 +37,51 @@ class PostItem extends Component {
             name: auth.user.name,
             displayPicture: auth.user.displayPicture
         }
+        let showImage = null;
+        if(post.hasImage) {
+            showImage = (<img src={post.image} height="500px" width="auto" />)
+        }
 
         return (
             <div>
-            <div className="card card-body mb-3">
-                <div className="row">
-                    <div className="col-md-2">
+            <div className={`card card-body ${styles.mycard} mb-5`}>
+                <div className="row mb-3">
+                    <div className="col-md-1">
                         <a href="">
-                            <img src={post.displayPicture} height="50px" width="50px" className="rounded-circle d-none d-md-block" alt=""/>
+                            <img src={post.displayPicture} height="50px" width="50px" className={`rounded-circle d-none d-md-block ${styles.displayBorder}`} alt=""/>
                         </a>
                         <br></br>
                     </div>
-                    <div className="col-md-8 mb-5">
+                    <div className="col-md-10">
                         
-                    {post.name}
-                        <p className="lead">
+                        <p className={styles.nameText}>{post.name}</p>
+                        <p className={styles.postText}>
                             {post.text}
                         </p>
-                        
-                <hr></hr>
-                        <button onClick={this.onLikeClick.bind(this,post._id,newLike)} type="button" className="btn btn-light mr-1">
+                        <div style={{textAlign:"center"}}>
+                        {showImage}
+                        </div>
+
+                    </div>
+                    
+                    <div className="col-md-1">
+                    {post.user === auth.user.id ? (
+                            
+                                 <FormatListBulletedIcon classnames={styles.editDeleteBtn} onClick={this.onDeleteClick.bind(this,post._id)} />
+                              
+                        ) : null}
+                    </div>
+                    <span className={styles.likeLength}><i className={
+                               `fa fa-thumbs-up ${styles.thumbBtn} `
+                               }></i>{post.likes.length}</span> 
+                    <div className={styles.likeCommentDiv}>
+                    <button className={`${styles.likeElement} btn btn-light mr-1`} onClick={this.onLikeClick.bind(this,post._id,newLike)} type="button">
                             <i className={
                                 this.findUserLike(post.likes) ? `fa fa-thumbs-up ${styles.thumbBtn} ` : `fa fa-thumbs-up`
                                }></i>
-                            <span className="badge badge-light">{post.likes.length}</span>
+                            <span className="badge">Like</span>
                         </button>
-                        <button onClick={this.onUnlikeClick.bind(this,post._id)} type="button" className="btn btn-light mr-1">
-                            <i className=" fa fa-thumbs-down"></i>
-                            <span className="badge badge-light"></span>
-                        </button>
-                        <Link to={`/post/${post._id}`} className={`${styles.commentBtn} btn btn-info mr-1`}>Comments</Link>
-                       
-                <hr></hr>
-                    </div>
-                    
-                    <div className="col-md-2">
-                    {post.user === auth.user.id ? (
-                            <button onClick={this.onDeleteClick.bind(this,post._id)} type="button" className="btn btn-danger mr-1">
-                                Delete &nbsp;<i className={`fa fa-times `}></i>
-                                </button>
-                        ) : null}
+                    <Link  to={`/post/${post._id}`} className={`${styles.commentBtn} ${styles.CommentElement} btn btn-info mr-1`}>Comments</Link>
                     </div>
                 </div>
                 <CommentFeed comments={post.comments} postId={post._id} />

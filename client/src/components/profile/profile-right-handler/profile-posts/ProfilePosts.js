@@ -11,14 +11,9 @@ class ProfilePosts extends Component {
     render() {
         const {posts,profile,auth} = this.props;
         const filterPost = posts.filter(post=> post.user===profile.user._id);
-        console.log(filterPost)
         const newPost = filterPost.sort((a,b)=> {
             let date1 = new Date(a.Date);
             let date2 = new Date(b.Date);
-            console.log(date1.getTime());
-            console.log(date2.getTime());
-            console.log(date1 - date2);
-            console.log("...");
             return date2-date1
         } );
         console.log(newPost);

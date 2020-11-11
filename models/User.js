@@ -21,6 +21,10 @@ const userSchema = new Schema({
     type: String,
     default: Date.now(),
   },
+  hasNotification:{
+    type: Boolean,
+    default: false
+  },
   notifications: [
     {
       senderName: {

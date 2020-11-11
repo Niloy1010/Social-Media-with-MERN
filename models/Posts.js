@@ -21,6 +21,26 @@ const postSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    hasImage: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    image: {
+        type: String
+    },
+    isEdited:{
+        type: String,
+        default: false,
+        required: true
+    },
+    editHistory:[
+        {
+            text:{
+                type: String
+            }
+        }
+    ],
     likes: [
         {
             user: {

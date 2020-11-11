@@ -1,3 +1,16 @@
 .formHead {
-  background-color: #3da5d9;
+  background-color: #14a5ee;
+}
+.buttonHandler {
+  display: flex;
+}
+.myBtn {
+  flex: 1;
+  border: 1px solid #14a5ee;
+  border-radius: 0px;
+}
+.myBtn:hover {
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #96dcff;
 }

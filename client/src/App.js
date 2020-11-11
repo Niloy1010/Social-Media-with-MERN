@@ -28,8 +28,23 @@ import Profile from './components/profile/Profile';
 import NotFound from './components/not-found/NotFound';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
+import {getCurrentUser} from './actions/authActions';
+import NotificationsComponent from './components/notifications/Notifications';
+import { Notifications } from 'react-push-notification';
 
+import Pusher from 'pusher-js';
+// Enable pusher logging - don't include this in production
+let notificationIcon=0;
+var pusher = new Pusher('b0336431ec4d3b049e2c', {
+  cluster: 'us2'
+});
 
+var channel = pusher.subscribe('notification');
+
+channel.bind('push-notification', function(data) {
+  console.log("PUSH");
+  store.dispatch(getCurrentUser());
+});
 //check for token
 if(localStorage.jwtToken) {
   //Set auth token header auth
@@ -51,11 +66,11 @@ if(localStorage.jwtToken) {
 
 }
 
-
 class App extends Component {
   render() {
     return(
       <div>
+        <Notifications />
         <Provider store={store}>
       <Router>     
           <Navbar />      
@@ -93,6 +108,9 @@ class App extends Component {
               <PrivateRoute exact path="/profiles" component={Profiles} />
               
               <PrivateRoute exact path="/profile/:handle" component={Profile} />
+
+              
+              <PrivateRoute exact path="/notifications" component={NotificationsComponent} />
 
               
               <Route exact path="/not-found" component={NotFound} />

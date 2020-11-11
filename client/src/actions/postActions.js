@@ -1,15 +1,57 @@
 import axios from 'axios';
-import {ADD_POST, DELETE_POST, GET_ERRORS, GET_POSTS, POST_LOADING, GET_POST} from './types';
+import {ADD_POST, DELETE_POST, GET_ERRORS, GET_POSTS, POST_LOADING, GET_POST,ADD_IMAGE_POST, SET_ERRORS_NULL} from './types';
+import {getCurrentUser} from './authActions';
+import addNotification from 'react-push-notification';
 
 //ADD POST
 export const addPost = postData => dispatch => {
     axios.post('/api/posts', postData)
-    .then(res => (
+    .then(res => {
+
+        addNotification({
+            title: 'Post',
+            message: 'Your status has been posted',
+            theme: 'light'
+        });
+        dispatch({
+            type: SET_ERRORS_NULL
+        })
+        return dispatch({
+            type: ADD_POST,
+            payload: res.data
+        })
+    })
+    .catch(err=> (
+        dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+        })
+    ))
+}
+
+
+//ADD IMAGE POST
+
+
+export const addImagePost = postData => dispatch => {
+    console.log(postData);
+    axios.post('/api/posts/image', postData)
+    .then(res => {
+
+        
+        addNotification({
+            title: 'Image Upload',
+            message: 'Your image has been uploaded',
+            theme: 'light'
+        });
+        dispatch({
+            type: SET_ERRORS_NULL
+        })
         dispatch({
             type: ADD_POST,
             payload: res.data
         })
-    ))
+    })
     .catch(err=> (
         dispatch({
             type: GET_ERRORS,
@@ -23,6 +65,7 @@ export const addPost = postData => dispatch => {
 export const deletePost = id => dispatch => {
     axios.delete(`/api/posts/${id}`)
     .then(res => {
+       
         return dispatch({
             type: DELETE_POST,
             payload: id
@@ -81,7 +124,9 @@ export const getPost = (id) => dispatch => {
 //Add like
 export const addLike = (id,userLike) => dispatch => {
     axios.post(`/api/posts/like/${id}`,userLike)
-    .then(res => dispatch(getPosts()))
+    .then(res => {
+        dispatch(getCurrentUser());
+        return dispatch(getPosts())})
     .catch(err=> 
         {
         return dispatch({
@@ -135,11 +180,13 @@ export const removeLike = id => dispatch => {
 //Add comment
 export const addComment = (id, comment) => dispatch => {
     axios.post(`/api/posts/comment/${id}`, comment)
-    .then(res=> 
-        dispatch({
+    .then(res=> {
+        console.log("comment");
+        dispatch(getCurrentUser());
+        return dispatch({
             type: GET_POST,
             payload: res.data
-        }))
+        })})
     .catch(err=> console.log(err))
 }
 

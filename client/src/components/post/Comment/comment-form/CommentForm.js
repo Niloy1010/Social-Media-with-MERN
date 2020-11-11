@@ -64,7 +64,7 @@ class CommentForm extends Component {
                                     error={errors.text}
                                     />
                                 </div>
-                                <button type="submit" className="btn btn-dark">Comment</button>
+                                <button type="submit" className="btn btn-dark" style={{float: "right"}}>Comment</button>
                             </form>
                         </div>
                     </div>
