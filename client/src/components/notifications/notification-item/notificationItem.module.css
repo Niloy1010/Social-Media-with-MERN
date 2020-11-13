@@ -1,9 +1,34 @@
 .checked {
   background-color: white;
+  border-radius: 0px;
 }
 .unchecked {
-  background-color: gray;
+  background-color: #d5d5d5;
+  border-radius: 0px;
 }
 .notificationItemcss:hover {
   cursor: pointer;
+}
+.singleNotification {
+  display: flex;
+  padding: 10px;
+}
+.notificationImage {
+  flex: 1;
+}
+.notificationText {
+  flex: 20;
+  padding-left: 20px;
+  padding-top: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: black;
+}
+.notificationItem {
+  border-bottom: 1px dotted gray;
+  border-radius: 10px;
+}
+.notificationTime {
+  font-size: 1rem;
+  color: gray;
 }

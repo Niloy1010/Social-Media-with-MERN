@@ -203,6 +203,10 @@ export const deleteComment = (postid, commentid) => dispatch => {
 }
 
 
+
+
+
+
 //Set loading state
 export const setPostLoading = () => {
     return {

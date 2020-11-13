@@ -6,6 +6,7 @@ import Spinner from '../common/Spinner';
 import {getPosts} from '../../actions/postActions'
 import PostFeed from './post-feed/PostFeed';
 import isEmpty from '../../validation/is-empty';
+import PostGroupItem from './postGroupItem/PostGroupItem'
 
 class Posts extends Component {
 
@@ -31,7 +32,10 @@ class Posts extends Component {
             <div className="feed">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-lg-3 d-none d-lg-block">
+                            <PostGroupItem />
+                        </div>
+                        <div className="col-lg-9">
                             <PostForm />
                             {postContent} 
                         </div>

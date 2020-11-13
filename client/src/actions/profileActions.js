@@ -29,7 +29,6 @@ const setProfileLoading =() =>{
 export const getProfileByHandle= (handle)=> dispatch => {
     dispatch(setProfileLoading());
     axios.get(`/api/profile/handle/${handle}`).then(res => {
-        console.log(res);
         return dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -112,7 +111,6 @@ export const createProfile = (profileData, history)=> dispatch => {
 
  //Get all Profiles
  export const getProfiles = () => dispatch=> {
-     console.log("Inside getProfiles");
      dispatch(setProfileLoading());
     axios.get("/api/profile/all")
     .then(res=> {

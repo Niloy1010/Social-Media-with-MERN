@@ -5,3 +5,15 @@
 .commentText {
   font-size: 1rem;
 }
+.commentItem {
+  display: inline-block;
+  width: max-content;
+  border-radius: 15px;
+  padding-left: 20px;
+  padding-top: 5px;
+  background-color: #f2f2f2;
+}
+.commentCard {
+  border: 0px;
+  padding-bottom: 5px;
+}

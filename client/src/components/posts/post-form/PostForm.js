@@ -133,8 +133,8 @@ class PostForm extends Component {
             </div>
             <div className={styles.buttonHandler} >
 
-            <button className={`${styles.myBtn} btn btn-primary} `} onClick={this.changeToText}>Post</button>
-            <button className={`${styles.myBtn} btn btn-primary} `} onClick={this.changeToImage}>Upload Image</button>
+            <button className={`${styles.myBtn} btn  `} onClick={this.changeToText}>Post</button>
+            <button className={`${styles.myBtn} btn `} onClick={this.changeToImage}>Upload Image</button>
             </div>
             <div className="card-body" >
                 

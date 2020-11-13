@@ -77,3 +77,16 @@ export const getCurrentUser = () => dispatch => {
   })
 }
 
+
+
+//Set Profile Picture
+export const setProfilePicture = (formData) => dispatch => {
+  axios.post('/api/users/profilepicture', formData)
+  .then((user)=> {
+      return dispatch({
+        type: SET_CURRENT_USER,
+        payload: user.data
+      })
+  })
+}
+

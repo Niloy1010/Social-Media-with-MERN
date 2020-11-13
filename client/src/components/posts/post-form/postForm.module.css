@@ -14,3 +14,6 @@
   font-weight: 500;
   background-color: #96dcff;
 }
+.selected {
+  font-weight: 600;
+}

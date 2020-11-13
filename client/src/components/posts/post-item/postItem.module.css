@@ -5,35 +5,41 @@
   color: #3da5d9;
 }
 .mycard {
-  border-radius: 20px;
-}
-.displayBorder {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding-bottom: 0px;
 }
 .likeCommentDiv {
+  margin-top: 10px;
   width: 100%;
   display: flex;
 }
 .likeElement {
   flex: 1;
+  border-radius: 0;
 }
 .CommentElement {
   flex: 1;
+  border-radius: 0;
 }
 .likeLength {
-  margin-left: 10px;
   margin-bottom: 5px;
   background-color: white;
   border-radius: 50%;
   border: 2px solid #14a5ee;
   padding: 4px;
   text-align: center;
+  width: max-content;
 }
 .nameText {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 600;
+  color: black;
 }
 .postText {
-  font-size: 1.2rem;
+  padding-top: 10px;
+  margin-top: 10px;
+  font-size: 1rem;
   font-weight: 400;
 }
 .editDeleteBtn:hover {
@@ -43,4 +49,10 @@
   cursor: pointer;
   cursor: progress !important;
   font-size: 1.8rem !important;
+}
+.profileStatus {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: gray;
+  display: block;
 }

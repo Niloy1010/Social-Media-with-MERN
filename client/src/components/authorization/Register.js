@@ -59,6 +59,7 @@ class Register extends Component {
 
     return (
     <div>
+      <img src="../../img/LogoMakr-6MSMTY.png" height="50px" width="50px" />
       <h1 className="large text-primary">Sign Up</h1>
       <p className="lead"><i className="fa fa-user"></i> Create Your Account</p>
       <form noValidate className="form" onSubmit={this.onSubmitForm}>

@@ -11,6 +11,22 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 
 class PostItem extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state=({
+            image: null
+        })
+    }
+
+    componentDidMount() {
+        const {post} = this.props;
+        if(post.hasImage) {
+            this.setState({
+                image: post.image
+            })
+        }
+    }
+
     onDeleteClick = (id) => {
         this.props.deletePost(id);
     }
@@ -32,58 +48,74 @@ class PostItem extends Component {
     }
     render() {
 
-        const {post, auth} = this.props;
+        const {post, auth,profile} = this.props;
+        
         const newLike = {
             name: auth.user.name,
             displayPicture: auth.user.displayPicture
         }
         let showImage = null;
-        if(post.hasImage) {
-            showImage = (<img src={post.image} height="500px" width="auto" />)
+        if(this.state.image) {
+            showImage = (<img src={this.state.image} height="50%" width="50%" />)
         }
+        let profileHandle = null;
+        let profileStatus = null;
+        let profileTime = null;
+        if(profile.profiles) {
+            let profileProperty = profile.profiles.filter(prof => prof.user._id.toString() === post.user.toString());
+            profileHandle = profileProperty[0].handle;
+            profileStatus = profileProperty[0].status;
 
+            
+        }
         return (
             <div>
-            <div className={`card card-body ${styles.mycard} mb-5`}>
-                <div className="row mb-3">
-                    <div className="col-md-1">
-                        <a href="">
-                            <img src={post.displayPicture} height="50px" width="50px" className={`rounded-circle d-none d-md-block ${styles.displayBorder}`} alt=""/>
-                        </a>
-                        <br></br>
+            <div className={`card card-body ${styles.mycard} mb-3`}>
+                
+                <div className="row">
+                    <div className="col-2 col-lg-1">
+                    <Link to={`/profile/${profileHandle}`} className="" >
+                            <img src={post.displayPicture} height="50px" width="50px" className={`rounded-circle ${styles.displayBorder}`} alt=""/>
+                        </Link>
                     </div>
-                    <div className="col-md-10">
+                    <div className="col-9 col-lg-10">
                         
-                        <p className={styles.nameText}>{post.name}</p>
-                        <p className={styles.postText}>
-                            {post.text}
-                        </p>
-                        <div style={{textAlign:"center"}}>
-                        {showImage}
-                        </div>
+                      <Link to={`/profile/${profileHandle}`} className={styles.nameText}>{post.name}</Link> 
+                        <span className={styles.profileStatus}>{profileStatus}</span>
+                        
+                       
 
                     </div>
                     
-                    <div className="col-md-1">
+                    <div className="col-1 col-lg-1">
                     {post.user === auth.user.id ? (
                             
                                  <FormatListBulletedIcon classnames={styles.editDeleteBtn} onClick={this.onDeleteClick.bind(this,post._id)} />
                               
                         ) : null}
                     </div>
+                   
+                    
+                </div>
+                <p className={styles.postText}>
+                            {post.text}
+                        </p>
+                        <div style={{textAlign:"center"}}>
+                        {showImage}
+                        </div>
                     <span className={styles.likeLength}><i className={
                                `fa fa-thumbs-up ${styles.thumbBtn} `
                                }></i>{post.likes.length}</span> 
+
                     <div className={styles.likeCommentDiv}>
-                    <button className={`${styles.likeElement} btn btn-light mr-1`} onClick={this.onLikeClick.bind(this,post._id,newLike)} type="button">
+                    <button className={`${styles.likeElement} btn btn-light`} onClick={this.onLikeClick.bind(this,post._id,newLike)} type="button">
                             <i className={
                                 this.findUserLike(post.likes) ? `fa fa-thumbs-up ${styles.thumbBtn} ` : `fa fa-thumbs-up`
                                }></i>
                             <span className="badge">Like</span>
                         </button>
-                    <Link  to={`/post/${post._id}`} className={`${styles.commentBtn} ${styles.CommentElement} btn btn-info mr-1`}>Comments</Link>
+                    <Link  to={`/post/${post._id}`} className={`${styles.commentBtn} ${styles.CommentElement} btn btn-info`}>Comments</Link>
                     </div>
-                </div>
                 <CommentFeed comments={post.comments} postId={post._id} />
             </div>
             </div>
@@ -100,7 +132,8 @@ PostItem.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    auth : state.auth
+    auth : state.auth,
+    profile: state.profile
 })
 
 export default  connect(mapStateToProps, {deletePost,addLike,removeLike})(PostItem);

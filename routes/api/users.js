@@ -86,9 +86,9 @@ upload.single('file'), (req,res)=> {
 
   User.findById(req.user.id).then(user=> {
     user.displayPicture = `http://localhost:5000/api/users/profilepicture/${req.file.id}`;
-    user.save().then( (newU) => {
+    user.save().then( (user) => {
       
-      res.json({file: req.file})
+      res.json({user})
     })
     .catch(err=> res.status(400).json({error: "Error occurred"}))
   })

@@ -7,7 +7,9 @@ import Spinner from '../common/Spinner';
 import {Link} from 'react-router-dom';
 import CommentForm from './Comment/comment-form/CommentForm';
 import CommentFeed from './Comment/comment-feed/CommentFeed';
-import isEmpty from '../../validation/is-empty'
+import isEmpty from '../../validation/is-empty';
+import {getProfiles} from '../../actions/profileActions';
+
 
 class Post extends Component {
 
@@ -38,12 +40,13 @@ class Post extends Component {
 Post.propTypes = {
     getPost : PropTypes.func.isRequired,
     post: PropTypes.object.isRequired,
-    auth: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
     post: state.post,
     auth: state.auth,
-    errors: state.errors
+    errors: state.errors,
+    profile: state.profile
 })
-export default  connect(mapStateToProps,{getPost})(Post);
+export default  connect(mapStateToProps,{getPost,getProfiles})(Post);

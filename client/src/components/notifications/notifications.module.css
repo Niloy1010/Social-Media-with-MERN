@@ -1,0 +1,20 @@
+.notificationContainer {
+  background-color: white;
+  border: 1px solid gray;
+}
+.recentNotificationsContainer {
+  background-color: white;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+.olderNotificationsContainer {
+  background-color: white;
+  border-radius: 10px;
+}
+.type {
+  font-weight: 500;
+  font-size: 1.2rem;
+  padding: 10px;
+  color: grey;
+  border-bottom: 2px solid gray;
+}

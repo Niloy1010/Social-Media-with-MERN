@@ -14,26 +14,28 @@ class CommentItem extends Component {
         const { comment, postId, auth} = this.props;
 
         return (
-            <div className="card card-body mb-3">
+            <div className={`card card-body mb-1 ${styles.commentCard} `}>
                 <div className="row">
-                    <div className="col-md-1">
-                        <a href="">
-                            <img src={comment.displayPicture} alt="" height="50px" width="50px" className="rounded-circle d-none d-md-block"/>
-                        </a>
+                    <div className="col-2 col-xl-1 pl-0 mr-auto">
+                            <img src={comment.displayPicture} alt="" height="50px" width="50px" className="rounded-circle d-block"/>
+                       
                         <br></br>
                     </div>
-                    <div className="col-md-11 text-left">
+                    <div className={`col-10 col-xl-11 text-left ${styles.commentItem} `}>
                         
-                    <p className={styles.commentName}>{comment.name}</p>
-                        <p className={styles.commentText}>
-                            {comment.text}
-                        </p>
-                        {comment.user === auth.user.id ? (
-                            <button onClick={this.onDeleteClick.bind(this,postId, comment._id)} type="button" className="btn btn-danger mr-1">
+                    <span className={styles.commentName}>{comment.name}</span>
+                    {comment.user === auth.user.id ? (
+                            <button onClick={this.onDeleteClick.bind(this,postId, comment._id)} type="button" style={{float:"right"}}>
                                 <i className="fa fa-times"></i>
                                 </button>
                         ) : null}
+                    <br></br>
+                        <span className={styles.commentText}>
+                            {comment.text}
+                        </span>
+                    
                     </div>
+                        
                 </div>
                 
             </div>

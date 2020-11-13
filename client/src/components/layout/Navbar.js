@@ -64,11 +64,7 @@ class Navbar extends Component {
             <div className={styles.item}><GroupIcon /></div>
             <div className={styles.item}><MessageIcon /></div>
             <div className={styles.search}><a href="#" onClick={this.onLogoutClick} className="nav-link">
-                                <img src={user.displayPicture} alt={user.name}
-                                className="rounded-circle"
-                                title="Gravatar Image"
-                                style={{width:'30px', marginRight:'5px'}}
-                                />
+                                
                                 Logout
                             </a></div>
             

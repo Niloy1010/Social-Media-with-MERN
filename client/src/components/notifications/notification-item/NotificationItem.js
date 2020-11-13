@@ -30,12 +30,37 @@ class NotificationItem extends Component {
 
     }
     render() {
+        const curDate = new Date();
+        const date = new Date(this.props.notification.date);
+        let time = Math.floor((curDate.getTime() - date.getTime())/60000);
         
+        if(time<=0) {
+            time = "Just Now"
+        }
+        else if(time>60) {
+            time = Math.floor(time/60);
+            if(time>24 ){
+                time = Math.floor(time/24) + "d";
+            }
+            else{
+                time = time + "h";
+            }
+        }
+        else{
+            time = time +  "m";
+        }
+        
+
         return (
-            <div className={ (this.props.notification.read ? `${styles.checked} notificationItemcss` : `${styles.unchecked} notificationItemcss`)}>
-            <Link to={`/post/${this.props.notification.postId}`} onClick={this.changeNotificationRead} >
-                <img src={this.state.displayPicture}  height="50px" width="50px" />
-                <h1>{this.props.notification.text}</h1>
+            <div className={this.props.notification.read ? `${styles.checked} ${styles.notificationItem}` : `${styles.unchecked} ${styles.notificationItem}`}>            
+                <Link to={`/post/${this.props.notification.postId}`}
+             onClick={this.changeNotificationRead}
+             className={styles.singleNotification}
+             >
+                <img src={this.state.displayPicture}  height="50px" width="auto" className={styles.notificationImage} />
+                <p className={styles.notificationText}>{this.props.notification.text}
+                <span className={styles.notificationTime} style={{float:"right"}}>{time}</span>
+                </p>
             </Link>
             </div>
         )
