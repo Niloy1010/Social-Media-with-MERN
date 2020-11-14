@@ -10,6 +10,7 @@ import {createProfile, getCurrentProfile} from '../../actions/profileActions';
 import {withRouter, Link} from 'react-router-dom';
 import isEmpty from '../../validation/is-empty';
 import axios from 'axios';
+import styles from './editprof.module.css';
 
 class EditProfile extends Component {
 
@@ -185,23 +186,26 @@ class EditProfile extends Component {
         }
 
         return (
-            <div className="create-profile">
-                <div className="container">
-                    <div className="row">
+            <div className={styles.basic}>
+                <div className={styles.container}>
+                <Link to="/dashboard" className={styles.basic} className={styles.btnlinkdash}>Back to Dashboard</Link>
+
+                    <div >
                         <div className="col-md-8 m-auto">
-                            <Link to="/dashboard" className="btn btn-light">Go back to dashboard</Link>
-                            <h1 className="display-4 text-center">Edit profile</h1>
+                            <h3 className="display-4 text-center" className={styles.headfont}>Edit Profile</h3>
                             <form onSubmit={this.imageSubmit} method="POST" encType="multipart/form-data">
-                    <div className="custom-file mb-3">
-                        <label for="file">Choose File</label>
-                        <input
+                    {/* <div className="custom-file mb-3">
+                        <label for="file" className={styles.btnlink}>Change Profile Picture</label>
+                        <input 
                          type="file"
                           name="file"
                            id="file"
                            onChange={this.handleImagePreview}
+                           className={styles.imgbtn}
                            />
-                        <input type="submit" value="submit" className="btn btn-primary" />
-                    </div>
+                           
+                        <button type="submit" value="Submit" className={styles.btn}>Submit</button>
+                    </div> */}
                 </form>
                             <form onSubmit={this.onSubmit}>
                                 <TextFieldGroup

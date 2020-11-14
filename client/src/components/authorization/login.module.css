@@ -1,0 +1,16 @@
+.container {
+    max-width: 400px;
+    width: 100%;
+    margin: 2% auto;
+    position: relative;
+    color: white;
+    padding: 2%;
+    background-image: linear-gradient(180deg, #05418A, black);
+
+  }
+  .contact {
+    background: #F9F9F9;
+    padding: 25px;
+    margin: 35px 0;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  }

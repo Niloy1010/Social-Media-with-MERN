@@ -115,8 +115,6 @@ export const createProfile = (profileData, history)=> dispatch => {
     axios.get("/api/profile/all")
     .then(res=> {
         
-        console.log("Inside then");
-        console.log(res.data);
         return dispatch({
         type: GET_PROFILES,
         payload: res.data

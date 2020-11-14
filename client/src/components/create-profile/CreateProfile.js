@@ -7,7 +7,8 @@ import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
 import TextFieldGroup from '../common/TextFieldGroup';
 import {createProfile} from '../../actions/profileActions';
-import {withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom';
+import styles from './createprof.module.css';
 
 class CreateProfile extends Component {
 
@@ -121,15 +122,18 @@ class CreateProfile extends Component {
         }
 
         return (
-            <div className="create-profile">
+            <div className="create-profile" >
                 <div className="container">
-                    <div className="row">
+                <hr className={styles.colorgraph}></hr>
+
+                    <div className="row" className={styles.justshadow}>
+
                         <div className="col-md-8 m-auto">
-                            <h1 className="display-4 text-center">Create Your profile</h1>
+                            <h1 className={styles.headfont}>Create your Profile</h1>
                             <p className="lead text-center">
                                 Let's get some information to make your profile stand out
                             </p>
-                            <form onSubmit={this.onSubmit}>
+                            <form onSubmit={this.onSubmit} >
                                 <TextFieldGroup
                                 placeholder="*Profile Handle"
                                 name="handle"
@@ -197,14 +201,14 @@ class CreateProfile extends Component {
                             />
 
                             <div className="mb-3">
-                                <button
-                                type="button"
+                                <button 
+                                type="button" 
                                 onClick={()=>{
                                     this.setState(prevState=>({
                                         displaySocialInputs: !prevState.displaySocialInputs
                                     }))
                                 }}
-                                 className="btn btn-light">
+                                className={styles.socialbtn}>
                                 {this.state.displaySocialInputs ? "Hide Social Links" : "Add social Links"}
 
                                 </button>
@@ -213,7 +217,7 @@ class CreateProfile extends Component {
 
                             {socialInputs}
 
-                            <input type="submit" value="Submit" className="btn btn-info btn-block mt-4"/>
+                            <input type="submit" value="Submit" className="btn btn-info btn-block mt-4" />
                             </form>
                             <small className="d-block pb-3">* required fields</small>
                         </div>

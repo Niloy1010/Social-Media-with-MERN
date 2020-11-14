@@ -181,6 +181,7 @@ router.put('/:id', passport.authenticate('jwt',{session: false}), (req,res)=> {
       }
       Post.findOneAndUpdate({_id : req.params.id}, {text: req.body.text}, {upsert: true,useFindAndModify: false})
       .then(post=> {
+        
         res.json(post)
       })
       .catch(err=> res.status(400).json(err))
@@ -200,17 +201,14 @@ router.post('/like/:id', passport.authenticate('jwt',{session: false}), (req,res
   if(req.params && req.params.id) {   
     Post.findById(req.params.id).then(post=> {
     if(post.likes.filter(like => like.user.toString() == req.user.id).length>0) {
-      console.log("UN");
       const removeIndex = post.likes.map(item => item.user.toString()).indexOf(req.user.id);
       post.likes.splice(removeIndex,1);
-      console.log(post.likes);
       post.save().then(post=> 
          res.json(post)
       )
-      .catch(err=> res.status(400).json(err));
+      .catch(err=> res.status(400).json({error:"Error"}));
       return ;
     }
-    console.log("OUT");
     post.likes.unshift({
       user: req.user.id,
       name: req.body.name,
@@ -222,13 +220,19 @@ router.post('/like/:id', passport.authenticate('jwt',{session: false}), (req,res
 
         
         user.save().then(()=> {
-          post.save().then(post=> res.json(post))
-          .catch(err=> res.status(400).json(err))
+          post.save().then(post=>{
+            console.log("Inside first condition");
+            console.log(post.likes);
+            return res.json(post)})
+          .catch(err=> res.status(400).json({error:"Error"}))
         })
       }
       else if(user._id.toString()===req.user._id.toString()){
         user.save().then(()=> {
-          post.save().then(post=> res.json(post))
+          post.save().then(post=>
+            {
+              console.log(post);
+            return res.json(post)})
           .catch(err=> res.status(400).json({err:"Error"}))
         })
         .catch(err=> res.status(400).json({error:"Error"}))
@@ -308,6 +312,8 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
       user: req.user.id
     };
     User.findById(post.user).then(user=> {
+
+      if(user._id.toString() !== req.user.id.toString()) {
       user.notifications.push({
         senderName: req.user.name,
         senderId: req.user.id,
@@ -321,6 +327,8 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
       pusher.trigger("notification", "push-notification", {
         message: "hello world"
       });
+      
+    }
       user.save().then(()=> {
         post.comments.unshift(newComment);
         post.save().then(post=> {
@@ -330,7 +338,7 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
       })
     })
     .catch(err=> res.status(400).json({"error": "User not found"}))
-
+ 
 
   })
   .catch(err=> res.status(404).json({notFound: "Post not found"}))

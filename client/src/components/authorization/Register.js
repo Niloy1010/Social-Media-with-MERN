@@ -4,7 +4,9 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux';
 import { registerUser} from '../../actions/authActions';
 import {withRouter} from 'react-router-dom';
-import TextFieldGroup from '../common/TextFieldGroup'
+import TextFieldGroup from '../common/TextFieldGroup';
+import styles from './register.module.css';
+
 class Register extends Component {
 
     constructor() {
@@ -58,9 +60,8 @@ class Register extends Component {
 
 
     return (
-    <div>
-      <img src="../../img/LogoMakr-6MSMTY.png" height="50px" width="50px" />
-      <h1 className="large text-primary">Sign Up</h1>
+    <div className={styles.container}>
+      <h3>Sign Up</h3>
       <p className="lead"><i className="fa fa-user"></i> Create Your Account</p>
       <form noValidate className="form" onSubmit={this.onSubmitForm}>
         <TextFieldGroup

@@ -31,7 +31,7 @@ class PostItem extends Component {
         this.props.deletePost(id);
     }
     onLikeClick = (id,newLike) =>  {
-        this.props.addLike(id,newLike);
+        this.props.addLike(id,newLike,this.props.posts.posts);
     }
     onUnlikeClick = (id) => {
         this.props.removeLike(id);
@@ -133,7 +133,8 @@ PostItem.propTypes = {
 
 const mapStateToProps = state => ({
     auth : state.auth,
-    profile: state.profile
+    profile: state.profile,
+    posts: state.post
 })
 
 export default  connect(mapStateToProps, {deletePost,addLike,removeLike})(PostItem);

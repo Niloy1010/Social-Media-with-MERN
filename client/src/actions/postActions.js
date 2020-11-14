@@ -1,7 +1,8 @@
 import axios from 'axios';
-import {ADD_POST, DELETE_POST, GET_ERRORS, GET_POSTS, POST_LOADING, GET_POST,ADD_IMAGE_POST, SET_ERRORS_NULL} from './types';
+import {ADD_POST, DELETE_POST, GET_ERRORS, GET_POSTS, POST_LOADING, GET_POST,ADD_IMAGE_POST, SET_ERRORS_NULL,REMOVE_LIKE} from './types';
 import {getCurrentUser} from './authActions';
 import addNotification from 'react-push-notification';
+import {ADD_LIKE} from './types';
 
 //ADD POST
 export const addPost = postData => dispatch => {
@@ -87,9 +88,11 @@ export const getPosts = () => dispatch => {
     axios.get('/api/posts')
     .then(res => 
         {
+        console.log(res.data);
+        const posts = res.data.sort((a,b)=> b.likes.length - a.likes.length);
         return dispatch({
             type: GET_POSTS,
-            payload: res.data
+            payload: posts
         })
 })
     .catch(err=> 
@@ -122,19 +125,34 @@ export const getPost = (id) => dispatch => {
 }
 
 //Add like
-export const addLike = (id,userLike) => dispatch => {
+export const addLike = (id,userLike,posts) => dispatch => {
     axios.post(`/api/posts/like/${id}`,userLike)
     .then(res => {
-        dispatch(getCurrentUser());
-        return dispatch(getPosts())})
+        const index = posts.findIndex(post=> post._id === id);
+        let newPost = posts.filter(post =>{ 
+             return post._id.toString()!==id.toString()});
+        dispatch({
+            type: REMOVE_LIKE,
+            payload: newPost 
+        })
+
+        return dispatch({
+            type: ADD_LIKE,
+            payload: {
+                data: res.data,
+                index: index
+            }
+        })
+    })
     .catch(err=> 
         {
         return dispatch({
             type: GET_ERRORS,
-            payload: err.response.data
+            payload: {error:"errors"}
         })
     })
 }
+
 
 //Add like to single post
 export const addLikeSinglePost = (id,userLike) => dispatch => {

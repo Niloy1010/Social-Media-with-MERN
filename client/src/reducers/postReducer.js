@@ -1,4 +1,4 @@
-import {ADD_POST, GET_POSTS,POST_LOADING, DELETE_POST, GET_POST} from '../actions/types';
+import {ADD_POST, GET_POSTS,POST_LOADING, DELETE_POST, GET_POST,ADD_LIKE,REMOVE_LIKE} from '../actions/types';
 
 const initialState = {
     posts: [],
@@ -35,6 +35,18 @@ export default function(state = initialState, action) {
             ...state,
             posts : action.payload,
             loading: false
+        }
+    case REMOVE_LIKE: 
+        return {
+            ...state,
+            posts: action.payload
+        }
+    case ADD_LIKE:
+        return {
+            ...state,
+            posts: [...state.posts.slice(0,action.payload.index),
+            action.payload.data,...state.posts.slice(action.payload.index)
+        ]
         }
     default:
         return state;

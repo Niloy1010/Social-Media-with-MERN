@@ -1,6 +1,6 @@
 .myNavbar {
   display: flex;
-  background-color: #002b5e;
+  background-color: white;
 }
 .logo {
   flex: 2;
@@ -18,6 +18,6 @@
   text-align: right;
 }
 .myNavbar svg {
-  color: #f9fbf2;
+  color: #0e345b;
   height: 60;
 }

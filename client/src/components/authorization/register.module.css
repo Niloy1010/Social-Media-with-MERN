@@ -1,0 +1,10 @@
+.container {
+    max-width: 500px;
+    width: 100%;
+    margin: 2% auto;
+    position: relative;
+    color: white;
+    padding: 3%;
+    background-image: linear-gradient(180deg, #05418A, black);
+
+  }

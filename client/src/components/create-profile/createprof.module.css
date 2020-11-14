@@ -1,0 +1,74 @@
+.colorgraph {
+    height: 20px;
+    border-top: 0;
+  /*   background: #c4e17f; */
+    border-radius: 5px;
+    background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  }
+
+  input  {
+    width:200px;
+      height:auto;
+      margin:10px;
+      padding:10px;
+      border:none;
+      border-radius:10px;
+      box-shadow: 0 0 5px rgba(90, 3, 250, 0.5);
+      background-color:rgb(255, 255, 255);
+      font-size:16px;
+      color:rgb(63, 63, 63);
+      outline: none;
+  }
+  select{
+    width:200px;
+    height:auto;
+    margin:10px;
+    padding:10px;
+    border:none;
+    border-radius:10px;
+    box-shadow: 0 0 5px rgba(252, 100, 40, 0.5);
+    background-color:rgb(255, 255, 255);
+    font-size:16px;
+    color:rgb(63, 63, 63);
+    outline: none;
+  }
+  .socialbtn {
+    background-color: #c7c3c3;
+    box-shadow: 0 0 5px rgba(248, 143, 4, 0.5);
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 5px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  
+  .socialbtn {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #c7c3c3;
+  }
+  
+  .socialbtn:hover {
+    background-color: #c7c3c3;
+    color: black;
+  }
+
+  .justshadow{
+    box-shadow: 0 0 5px rgba(150, 3, 250, 0.5);
+    padding: 20px;
+    margin-top: 25px;    
+  }
+  .headfont{
+    font-size: 30pt;
+    color: black;
+    text-align: center;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+}

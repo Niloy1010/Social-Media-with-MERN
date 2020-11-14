@@ -12,9 +12,10 @@ class PostFeed extends Component {
     }
     render() {
         const {posts} = this.props;
-        const newPost = posts.sort((a,b)=> b.likes.length - a.likes.length);
+        
+       // const newPost = posts.sort((a,b)=> b.likes.length - a.likes.length);
         return (
-            newPost.map(post => <PostItem key={post._id} post={post} />)
+            posts.map(post => <PostItem key={post._id} post={post} />)
         )
     
     }

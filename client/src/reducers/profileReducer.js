@@ -20,8 +20,6 @@ export default function(state = initialState, action) {
                 loading: false
             };
         case GET_PROFILES:
-            console.log("Inside Reducer");
-            console.log(action.payload);
             return {
                     ...state,
                     profiles: action.payload,

@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
 import TextFieldGroup from '../common/TextFieldGroup';
 import {addEducation} from '../../actions/profileActions';
+import styles from './addedu.module.css';
 
 class AddEducation extends Component {
 
@@ -66,16 +67,16 @@ class AddEducation extends Component {
 
     render() {
 
-        console.log(this.state);
         const {errors} = this.state;
 
         return (
-            <div className="add-education">
-                <div className="container">
-                    <div className="row">
+            <div className={styles.basic}>
+                <div className={styles.container}>
+                <Link to="/dashboard" className={styles.btnlinkdash}>Back to Dashboard</Link>
+
+                    <div >
                         <div className="col-md-8 m-auto">
-                            <Link to="/dashboard" className="btn btn-light">Go back to dashboard</Link>
-                            <h1 className="display-4 text-center">Add Education</h1>
+                            <h3 className={styles.headfont}>Add Education</h3>
                             <p className="lead text-center">
                                 Add your education background
                             </p>

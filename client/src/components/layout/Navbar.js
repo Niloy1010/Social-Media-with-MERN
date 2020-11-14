@@ -14,6 +14,7 @@ import {getCurrentProfile} from '../../actions/profileActions';
 import {getCurrentUser} from '../../actions/authActions';
 import isEmpty from '../../validation/is-empty';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import logo from '../../img/Logo.png'
 
 
 class Navbar extends Component {
@@ -47,7 +48,9 @@ class Navbar extends Component {
 
         const authLinks = (
             <div className={`${styles.myNavbar} pt-2 pb-2 mb-5`}>
-            <div className={`${styles.logo}`}>1</div>
+            <div className={`${styles.logo} pl-2`}>
+                <img src={logo} height="50px" width="auto" />
+            </div>
         <Link to="/posts" className={styles.item}> <HomeIcon /></Link>
            
 

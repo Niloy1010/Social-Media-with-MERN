@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
 import TextFieldGroup from '../common/TextFieldGroup';
 import {addExperience} from '../../actions/profileActions';
+import styles from './addexp.module.css';
+
 
 class AddExperience extends Component {
 
@@ -34,14 +36,12 @@ class AddExperience extends Component {
     static getDerivedStateFromProps(nextProps,prevState){
         
         if(nextProps.errors) {
-            console.log("IN");
             return {
                 ...prevState,
                 errors: nextProps.errors
             }
         }
         else{
-            console.log("OUT");
             return {
                 ...prevState
             }
@@ -73,12 +73,15 @@ class AddExperience extends Component {
         const {errors} = this.state;
 
         return (
-            <div className="add-experience">
-                <div className="container">
-                    <div className="row">
+
+            <div className={styles.basic}>
+
+                <div className={styles.container}>
+                <Link to="/dashboard" className={styles.btnlinkdash}>Back to Dashboard</Link>
+
+                    <div >
                         <div className="col-md-8 m-auto">
-                            <Link to="/dashboard" className="btn btn-light">Go back to dashboard</Link>
-                            <h1 className="display-4 text-center">Add Experience</h1>
+                            <h3 className={styles.headfont}>Add Experience</h3>
                             <p className="lead text-center">
                                 Add any job you have had in the past or current
                             </p>

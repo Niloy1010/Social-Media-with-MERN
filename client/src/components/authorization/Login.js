@@ -3,7 +3,8 @@ import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import { loginUser} from '../../actions/authActions';
-import TextFieldGroup from '../common/TextFieldGroup'
+import TextFieldGroup from '../common/TextFieldGroup';
+import styles from './login.module.css';
 
 class Login extends Component {
 
@@ -53,10 +54,10 @@ class Login extends Component {
 
       const {errors} = this.state;
         return (
-    <div>
-    <h1 className="large text-primary">Sign In</h1>
-      <p className="lead"><i className="fa fa-user"></i> Sign into Your Account</p>
-      <form noValidate className="form" onSubmit ={this.onSubmitForm}>
+    <div className={styles.container}>
+    <h3>Sign In</h3>
+      <p className="lead"><i className="fa fa-user"></i> Sign into your Account</p>
+      <form noValidate className="form" onSubmit ={this.onSubmitForm} className={styles.contact}>
 
           <TextFieldGroup
           name="email"
@@ -80,7 +81,7 @@ class Login extends Component {
         <input type="submit" className="btn btn-primary" value="Login" />
       </form>
       <p className="my-1">
-        Don't have an account? <Link to="/register">Sign Up</Link>
+        Don't have an account? <Link to="/register" className= {'${styles.a}'} >Sign Up</Link>
       </p>
     </div>
         )

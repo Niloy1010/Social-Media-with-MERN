@@ -54,8 +54,6 @@ class PostForm extends Component {
         formData.append("file", this.state.image_file);
         
         this.props.addImagePost(formData);
-         console.log(this.state.text);
-         console.log(this.state.image_file);
         if(!isEmpty(this.state.text) && !isEmpty(this.state.image_file.name)) {
            
             this.setState({
@@ -114,7 +112,7 @@ class PostForm extends Component {
                         />
                     </div>
             <label htmlFor="file"></label>
-            <input
+            <input style={{width:"auto", boxShadow:"none"}}
              type="file"
               name="file"
                id="file"
