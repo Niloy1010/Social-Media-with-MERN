@@ -30,7 +30,7 @@ class PostGroupItem extends Component {
             width="100%"
             objectfit="cover"
           />
-          <p className={`${styles.userName}`}>{user.name}</p>
+          <p className={`${styles.userName} mt-2`}>{user.name}</p>
         </div>
       );
     }
