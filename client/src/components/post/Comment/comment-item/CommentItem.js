@@ -41,6 +41,7 @@ class CommentItem extends Component {
               height="50px"
               width="50px"
               className="rounded-circle d-block"
+              style={{ objectFit: "cover" }}
             />
 
             <br></br>

@@ -29,9 +29,7 @@ mongoose
   .then(() => console.log("Database Connected"))
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => {
-  res.send("Hello!");
-});
+
 
 //Routes
 app.use("/api/users", users);
