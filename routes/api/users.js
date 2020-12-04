@@ -85,7 +85,7 @@ router.post(
   (req, res) => {
     User.findById(req.user.id)
       .then((user) => {
-        user.displayPicture = `http://localhost:5000/api/users/profilepicture/${req.file.id}`;
+        user.displayPicture = `/api/users/profilepicture/${req.file.id}`;
         user
           .save()
           .then((user) => {
