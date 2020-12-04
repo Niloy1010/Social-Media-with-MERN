@@ -7,7 +7,7 @@ const secretKey = require("../../config/keys").secretOrKey;
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const keys = require("../../config/keys");
-const mongoose = require("Mongoose");
+const mongoose = require("mongoose");
 
 const User = require("../../models/User");
 const passport = require("passport");
