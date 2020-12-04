@@ -1,5 +1,11 @@
 .formHead {
-  background-color: #14a5ee;
+  background-color: #0e345b;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+.formContainer {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 2px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 .buttonHandler {
   display: flex;
@@ -8,6 +14,17 @@
   flex: 1;
   border: 1px solid #14a5ee;
   border-radius: 0px;
+  margin: auto;
+}
+.formBtn {
+  background-color: #14a5ee;
+  color: white;
+}
+.myBtn:first-of-type {
+  border-left: 0px;
+}
+.myBtn:nth-of-type(2) {
+  border-right: 0px;
 }
 .myBtn:hover {
   font-size: 1rem;
@@ -16,4 +33,9 @@
 }
 .selected {
   font-weight: 600;
+}
+
+.postContainer {
+  border-radius: 10px;
+  border: 0px;
 }

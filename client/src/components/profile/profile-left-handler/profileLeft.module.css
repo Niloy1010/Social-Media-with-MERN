@@ -5,6 +5,10 @@
   background-color: #f9fbf2;
   color: black;
 }
+.infoCard {
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(14, 52, 91, 0.15), 0 2px 3px rgba(14, 52, 91, 0.2);
+}
 .mybtn {
   background-color: #3da5d9;
   color: black;

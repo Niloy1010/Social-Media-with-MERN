@@ -1,5 +1,13 @@
 .commentBtn {
-  background-color: #14a5ee;
+  background-color: #f8f9fa;
+  border-left: 1px solid black;
+}
+.commentBtn svg {
+  height: 20px;
+  color: #14a5ee;
+}
+.CommentElement:hover {
+  background-color: #eaeaea;
 }
 .thumbBtn {
   color: #3da5d9;
@@ -8,11 +16,17 @@
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   padding-bottom: 0px;
+
+  box-shadow: 0 0 0 1px rgba(14, 52, 91, 0.15), 0 2px 3px rgba(14, 52, 91, 0.2);
 }
 .likeCommentDiv {
   margin-top: 10px;
   width: 100%;
   display: flex;
+}
+.likeCommentDiv svg {
+  color: #14a5ee;
+  height: 20px;
 }
 .likeElement {
   flex: 1;
@@ -22,6 +36,9 @@
   flex: 1;
   border-radius: 0;
 }
+.modalName {
+  padding-top: 10px;
+}
 .likeLength {
   margin-bottom: 5px;
   background-color: white;
@@ -30,6 +47,9 @@
   padding: 4px;
   text-align: center;
   width: max-content;
+}
+.likeLength:hover {
+  cursor: pointer;
 }
 .nameText {
   font-size: 1.2rem;
@@ -42,17 +62,61 @@
   font-size: 1rem;
   font-weight: 400;
 }
-.editDeleteBtn:hover {
-  cursor: progress !important;
-}
-.MuiSvgIcon-root:hover {
+.editDeleteBtn > svg:hover {
   cursor: pointer;
-  cursor: progress !important;
-  font-size: 1.8rem !important;
 }
+
 .profileStatus {
   font-size: 0.8rem;
   font-weight: 500;
   color: gray;
   display: block;
+}
+
+.updatePost {
+  position: relative;
+}
+.updatePostBox {
+  position: absolute;
+  left: -30px;
+  top: 30px;
+  font-size: 14px;
+  display: inline;
+  background-color: #f2f2f2;
+  color: red;
+  font-weight: 500;
+  border: 1px solid black;
+  padding: 10px;
+  text-transform: capitalize;
+  animation: slide-down 0.4s ease;
+}
+.updatePostBox:hover {
+  cursor: pointer;
+  background-color: white;
+  font-size: 15px;
+  transition: font-size 0.2s ease-in;
+}
+.modalOpenBox {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.modalOpenBox:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: #14a5ee;
+}
+.modalImage {
+  margin-right: 20px;
+}
+
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }

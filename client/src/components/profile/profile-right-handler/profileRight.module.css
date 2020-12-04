@@ -8,8 +8,10 @@
   /* background-color: #3da5d9; */
 }
 .cardbio {
-  min-height: 350px;
+  min-height: 300px;
   border: white;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(14, 52, 91, 0.15), 0 2px 3px rgba(14, 52, 91, 0.2);
 }
 
 .toggleButton:hover {
@@ -18,4 +20,15 @@
 .largeIcon {
   width: 60;
   height: 60;
+}
+.row svg {
+  color: #0e345b;
+}
+.credBtn:hover {
+  cursor: pointer;
+  background-color: #d5d3d3;
+}
+.credBtn {
+  max-height: 40px;
+  border-bottom: 2px solid black;
 }

@@ -1,6 +1,9 @@
 .myNavbar {
   display: flex;
   background-color: white;
+  box-shadow: 0 0 0 1px rgba(14, 52, 91, 0.15), 0 2px 3px rgba(14, 52, 91, 0.2);
+  padding-left: 15px;
+  padding-right: 15px;
 }
 .logo {
   flex: 2;
@@ -20,4 +23,8 @@
 .myNavbar svg {
   color: #0e345b;
   height: 60;
+}
+.logout:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

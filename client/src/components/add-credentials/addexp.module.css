@@ -1,31 +1,62 @@
-
 .container {
-    max-width: 900px;
-    width: 100%;
-    margin: 2% auto;
-    position: relative;
-    color: white;
-    padding: 2%;
-    background-image: linear-gradient(180deg, #05418A, black);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  .basic {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  }
-  .btnlinkdash{
-    color: black;
-    font-weight: 500;
-    background-color: white;
-    border: #B1ACAA;
-    border-radius: 5px;
-    padding: 5px;
-    margin: 0;
-    float: left;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  .headfont{
-    font-size: 30pt;
-    color: white;
-    text-align: center;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+  max-width: 900px;
+  width: 100%;
+  margin: 2% auto;
+  position: relative;
+  color: white;
+  padding: 2%;
+  background-image: linear-gradient(180deg, #05418a, black);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.topcontainer {
+  height: 10px;
+  background: -webkit-linear-gradient(
+    left,
+    #64319e,
+    #b68fe9 12.5%,
+    #ccdf3d 12.5%,
+    #f7fdca 25%,
+    #fecf71 25%,
+    #fecf71 37.5%,
+    #f0776c 37.5%,
+    #f0776c 50%,
+    #db9dbe 50%,
+    #db9dbe 62.5%,
+    #c49cde 62.5%,
+    #c49cde 75%,
+    #669ae1 75%,
+    #669ae1 87.5%,
+    #62c2e4 87.5%,
+    #62c2e4
+  );
+}
+.basic {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.btnlinkdash {
+  color: black;
+  font-weight: 500;
+  background-color: white;
+  border: #b1acaa;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0;
+  float: left;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.headfont {
+  font-size: 30pt;
+  color: white;
+  text-align: center;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+input {
+  box-shadow: none;
+}
+textarea {
+  margin-left: 10px;
+}
+.form-check-input {
+  margin-left: 0px !important;
 }

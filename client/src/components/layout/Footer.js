@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-export default ()=> {
-    return (
-        <footer className="bg-dark text-white mt-5 p-4 text-center">
-            Copyright &copy; {new Date().getFullYear()} Social
-        </footer>
-    )
-}
+export default () => {
+  return (
+    <footer className="bg-white text-black font-weight-bold p-4 text-center mt-5">
+      Copyright &copy; {new Date().getFullYear()} VLINK
+    </footer>
+  );
+};

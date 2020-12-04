@@ -1,0 +1,32 @@
+.allComments {
+  box-shadow: 0 0 0 1px rgba(14, 52, 91, 0.15), 0 2px 3px rgba(14, 52, 91, 0.2);
+  border-radius: 10px;
+}
+.numOfLikes {
+  border-radius: 50%;
+  height: 40px;
+  padding: 10px;
+  background-color: white;
+  color: #14a5ee;
+}
+.numOfLikes:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.modalOpenBox {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.modalOpenBox:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: #14a5ee;
+}
+.modalImage {
+  margin-right: 20px;
+}
+
+.modalName {
+  padding-top: 10px;
+}

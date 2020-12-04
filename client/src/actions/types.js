@@ -19,6 +19,7 @@ export const DELETE_POST = "DELETE_POST";
 export const ADD_IMAGE_POST = "ADD_IMAGE_POST"
 export const ADD_LIKE = "ADD_LIKE";
 export const REMOVE_LIKE = "REMOVE_LIKE";
+export const ADD_COMMENT = "ADD_COMMENT";
 
 //Notification Actions
 export const GET_NOTIFICATION = "GET_NOTIFICATION";

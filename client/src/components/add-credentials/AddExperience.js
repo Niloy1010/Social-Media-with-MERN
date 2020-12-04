@@ -36,12 +36,14 @@ class AddExperience extends Component {
     static getDerivedStateFromProps(nextProps,prevState){
         
         if(nextProps.errors) {
+            console.log("IN");
             return {
                 ...prevState,
                 errors: nextProps.errors
             }
         }
         else{
+            console.log("OUT");
             return {
                 ...prevState
             }
@@ -75,8 +77,10 @@ class AddExperience extends Component {
         return (
 
             <div className={styles.basic}>
+                <hr className={styles.topcontainer}></hr>
 
                 <div className={styles.container}>
+
                 <Link to="/dashboard" className={styles.btnlinkdash}>Back to Dashboard</Link>
 
                     <div >
@@ -165,7 +169,8 @@ class AddExperience extends Component {
                         </div>
                     </div>
                 </div>
-                
+                <hr className={styles.topcontainer}></hr>
+
             </div>
         )
     }

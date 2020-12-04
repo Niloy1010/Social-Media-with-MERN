@@ -7,19 +7,18 @@ const secretKey = require("../../config/keys").secretOrKey;
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const keys = require("../../config/keys");
-const mongoose = require('Mongoose');
-
+const mongoose = require("Mongoose");
 
 const User = require("../../models/User");
 const passport = require("passport");
 const { session } = require("passport");
 
 //Grid-fs for image uploading
-const crypto = require('crypto');
-const path = require('path');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
+const crypto = require("crypto");
+const path = require("path");
+const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage");
+const Grid = require("gridfs-stream");
 const Pusher = require("pusher");
 
 const pusher = new Pusher({
@@ -27,17 +26,17 @@ const pusher = new Pusher({
   key: "b0336431ec4d3b049e2c",
   secret: "7a4078ca0f16e095ed68",
   cluster: "us2",
-  useTLS: true
+  useTLS: true,
 });
 
 //Connection for file upload
 //Init Stream
 const conn = mongoose.createConnection(keys.mongoURI);
 let gfs;
-conn.once('open', ()=> {
+conn.once("open", () => {
   gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-})
+  gfs.collection("uploads");
+});
 
 //Storage Engine
 
@@ -50,54 +49,53 @@ var storage = new GridFsStorage({
           console.log("Error");
           return reject(err);
         }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const filename = buf.toString("hex") + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
-          bucketName: 'uploads'
+          bucketName: "uploads",
         };
         resolve(fileInfo);
       });
     });
-  }
+  },
 });
 const upload = multer({ storage });
 
 //@route GET api/users/profilePicture/:id {picture id}
 //@desc loads form
-router.get("/profilepicture/:id", (req,res)=> {
-  gfs.files.findOne({_id:mongoose.Types.ObjectId(req.params.id)})
-  .then(file=> {
-    if(!file || file.length===0) {
-      res.status(404).json({"notFound": "File not found"});
-    }
-    var readstream = gfs.createReadStream(file.filename);
-    readstream.pipe(res);
-  })
-  .catch(err=> res.status(404).json({"notFound": "File not found"}));
-})
-
-
+router.get("/profilepicture/:id", (req, res) => {
+  gfs.files
+    .findOne({ _id: mongoose.Types.ObjectId(req.params.id) })
+    .then((file) => {
+      if (!file || file.length === 0) {
+        res.status(404).json({ notFound: "File not found" });
+      }
+      var readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    })
+    .catch((err) => res.status(404).json({ notFound: "File not found" }));
+});
 
 //@route POST api/users/profilePicture
 //@desc Uploads files to DB
-router.post("/profilepicture",
-passport.authenticate("jwt", { session: false }),
-upload.single('file'), (req,res)=> {
-
-  User.findById(req.user.id).then(user=> {
-    user.displayPicture = `http://localhost:5000/api/users/profilepicture/${req.file.id}`;
-    user.save().then( (user) => {
-      
-      res.json({user})
-    })
-    .catch(err=> res.status(400).json({error: "Error occurred"}))
-  })
-  .catch(err=> res.status(404).json({msg:"User not found"}));
-
-})
-
-
-
+router.post(
+  "/profilepicture",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("file"),
+  (req, res) => {
+    User.findById(req.user.id)
+      .then((user) => {
+        user.displayPicture = `http://localhost:5000/api/users/profilepicture/${req.file.id}`;
+        user
+          .save()
+          .then((user) => {
+            res.json({ user });
+          })
+          .catch((err) => res.status(400).json({ error: "Error occurred" }));
+      })
+      .catch((err) => res.status(404).json({ msg: "User not found" }));
+  }
+);
 
 //@route GET api/users/test
 //@desc TESTS users route
@@ -136,7 +134,7 @@ router.post("/register", (req, res) => {
           email: req.body.email,
           displayPicture: avatar,
           password: req.body.password,
-          hasNotification
+          hasNotification: false,
         });
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -166,9 +164,8 @@ router.post("/login", (req, res) => {
   User.findOne({
     email: req.body.email,
   }).then((user) => {
-    
     pusher.trigger("notification", "push-notification", {
-      message: "hello world"
+      message: "hello world",
     });
     if (!user) {
       errors.email = "User not found";
@@ -181,7 +178,7 @@ router.post("/login", (req, res) => {
             name: user.name,
             displayPicture: user.displayPicture,
             hasNotification: user.hasNotification,
-            notifications: [...user.notifications]
+            notifications: [...user.notifications],
           };
 
           jwt.sign(payload, secretKey, { expiresIn: "2h" }, (err, token) => {
@@ -211,12 +208,10 @@ router.get(
       email: req.user.email,
       displayPicture: req.user.displayPicture,
       hasNotification: req.user.hasNotification,
-      notifications: [...req.user.notifications]
+      notifications: [...req.user.notifications],
     });
   }
 );
-
-
 
 //@route GET api/users/notifications
 //@desc Get current user information
@@ -225,23 +220,21 @@ router.get(
   "/notifications",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-   User.findOne({_id: req.user.id})
-   .then(user=> {
-     res.json(user.notifications);
-   })
-   .catch(err=>{
-     res.status(404).json({notFound:"User not found"})
-   })
+    User.findOne({ _id: req.user.id })
+      .then((user) => {
+        res.json(user.notifications);
+      })
+      .catch((err) => {
+        res.status(404).json({ notFound: "User not found" });
+      });
   }
 );
 
-router.get("/displayPicture/:id", (req,res)=> {
-  User.findOne({_id: req.params.id})
-  .then(user=>
-    res.json({"displayPicture": user.displayPicture}))
-    .catch(err=> res.status(400).json({"error": "error"}))
-})
-
+router.get("/displayPicture/:id", (req, res) => {
+  User.findOne({ _id: req.params.id })
+    .then((user) => res.json({ displayPicture: user.displayPicture }))
+    .catch((err) => res.status(400).json({ error: "error" }));
+});
 
 //@route GET api/users/notifications/visited
 //@desc SET current user notification
@@ -249,21 +242,21 @@ router.get(
   "/notifications/visited",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-   User.findOne({_id: req.user.id})
-   .then(user=> {
-     user.hasNotification = false;
-     user.save().then(resUser=> {
-       res.json(resUser)
-     })
-     .catch(err=> res.status(400).json({error:"User"}))
-   })
-   .catch(err=>{
-     res.status(404).json({notFound:"User not found"})
-   })
+    User.findOne({ _id: req.user.id })
+      .then((user) => {
+        user.hasNotification = false;
+        user
+          .save()
+          .then((resUser) => {
+            res.json(resUser);
+          })
+          .catch((err) => res.status(400).json({ error: "User" }));
+      })
+      .catch((err) => {
+        res.status(404).json({ notFound: "User not found" });
+      });
   }
 );
-
-
 
 //@route GET api/users/notifications/visited/:id
 //@desc SET current user notification
@@ -271,20 +264,24 @@ router.get(
   "/notifications/visited/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-   User.findOne({_id: req.user.id})
-   .then(user=> {
-     
-     user.notifications.map(notification => notification._id.toString() === req.params.id ? notification.read=true : notification.read=notification.read);
-     user.save().then(resUser=> {
-       res.json(resUser)
-     })
-     .catch(err=> res.status(400).json({error:"Error"}))
-   })
-   .catch(err=>{
-     res.status(404).json({notFound:"User not found"})
-   })
+    User.findOne({ _id: req.user.id })
+      .then((user) => {
+        user.notifications.map((notification) =>
+          notification._id.toString() === req.params.id
+            ? (notification.read = true)
+            : (notification.read = notification.read)
+        );
+        user
+          .save()
+          .then((resUser) => {
+            res.json(resUser);
+          })
+          .catch((err) => res.status(400).json({ error: "Error" }));
+      })
+      .catch((err) => {
+        res.status(404).json({ notFound: "User not found" });
+      });
   }
 );
-
 
 module.exports = router;

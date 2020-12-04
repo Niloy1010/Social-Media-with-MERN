@@ -1,0 +1,15 @@
+.seeMore:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.seeMore {
+  color: gray;
+}
+.countNumberDiv {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.commentFeed {
+  border-radius: 10px;
+  margin-bottom: 10px;
+}

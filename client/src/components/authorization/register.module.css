@@ -1,10 +1,14 @@
 .container {
-    max-width: 500px;
-    width: 100%;
-    margin: 2% auto;
-    position: relative;
-    color: white;
-    padding: 3%;
-    background-image: linear-gradient(180deg, #05418A, black);
-
-  }
+  max-width: 500px;
+  width: 100%;
+  margin: 2% none;
+  position: relative;
+  color: white;
+  padding: 4%;
+  background-image: linear-gradient(180deg, #05418a, black);
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.signIn {
+  margin-top: 80px;
+  margin-bottom: 50px;
+}

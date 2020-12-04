@@ -1,6 +1,14 @@
 .groupContainer {
   /* border: 1px solid #0e345b; */
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(14, 52, 91, 0.15), 0 2px 3px rgba(14, 52, 91, 0.2);
+  padding-bottom: 10px;
+}
+.myBtn {
+  background-color: #14a5ee;
+  color: white;
+  margin: auto;
 }
 
 .myGroups {
