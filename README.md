@@ -1,5 +1,6 @@
 # Social-Media-with-MERN
 A social Media platform using MERN stack
+
 Live link https://thawing-springs-47729.herokuapp.com/
 ## Install server dependencies
 npm install
