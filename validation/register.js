@@ -27,6 +27,9 @@ const validateRegisterInput = (data) => {
   if (Validator.isEmpty(data.cpassword)) {
     errors.cpassword = "Please Re-enter password";
   }
+  if (data.cpassword !== data.password) {
+    errors.cpassword = "Passwords don't match";
+  }
 
   return {
     errors,
