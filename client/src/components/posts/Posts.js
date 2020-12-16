@@ -30,9 +30,14 @@ class Posts extends Component {
         <div className="container">
           <div className="row">
             <div className={`${styles} col-lg-3 d-none d-lg-block`}>
-              {auth ? <PostGroupItem displayPicture={auth.user.displayPicture} /> : null}
+              {auth ? (
+                <PostGroupItem displayPicture={auth.user.displayPicture} />
+              ) : null}
             </div>
-            <div className="col-lg-9">
+            <div
+              className="col-sm-12 col-lg-9"
+              style={{ paddingRight: "0px", paddingLeft: "0px" }}
+            >
               <PostForm />
               {postContent}
             </div>
