@@ -16,10 +16,10 @@ import Modal from "react-modal";
 const customStyles = {
   content: {
     top: "20%",
-    left: "40%",
+    left: window.innerWidth < 768 ? "10%" : "40%",
     right: "auto",
     bottom: "auto",
-    width: "500px",
+    width: "300px",
   },
 };
 class PostItem extends Component {
