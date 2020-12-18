@@ -15,13 +15,13 @@ class NotificationsComponent extends Component {
 
     const curDate = new Date();
 
-    const recentNotifications = notifications.filter((notification) => {
+    const recentNotifications = notifications?.filter((notification) => {
       let date = new Date(notification.date);
       let measureNotificationRecent =
         (curDate.getTime() - date.getTime()) / 60000 / 60 / 24;
       return measureNotificationRecent < 1;
     });
-    const olderNotifications = notifications.filter((notification) => {
+    const olderNotifications = notifications?.filter((notification) => {
       let date = new Date(notification.date);
       let measureNotificationRecent =
         (curDate.getTime() - date.getTime()) / 60000 / 60 / 24;
@@ -30,14 +30,9 @@ class NotificationsComponent extends Component {
 
     let showNotifications;
     if (notifications) {
-      showNotifications = notifications
-        .reverse()
-        .map((notification) => (
-          <NotificationItem
-            key={notification._id}
-            notification={notification}
-          />
-        ));
+      showNotifications = notifications.map((notification) => (
+        <NotificationItem key={notification._id} notification={notification} />
+      ));
     }
 
     let showRecentNotifications;
