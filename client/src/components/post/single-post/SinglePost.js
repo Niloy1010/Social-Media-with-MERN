@@ -29,7 +29,7 @@ class SinglePost extends Component {
   };
   onDeleteClick = (id) => {
     this.props.deletePost(id);
-    this.props.history.push("/posts");
+    this.props.history.push("/");
   };
   onLikeClick = (id) => {
     this.props.addLikeSinglePost(id);
