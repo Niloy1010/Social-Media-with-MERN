@@ -19,7 +19,6 @@ var pusher = new Pusher("b0336431ec4d3b049e2c", {
 var channel = pusher.subscribe("notification");
 
 channel.bind("push-notification", function (data) {
-  console.log("PUSH");
   store.dispatch(getCurrentUser());
 });
 //check for token
@@ -33,8 +32,6 @@ if (localStorage.jwtToken) {
   //check for expired token
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
-    console.log(currentTime);
-    console.log(decoded.exp);
     //logout
     store.dispatch(logoutUser());
     store.dispatch(clearCurrentProfile());

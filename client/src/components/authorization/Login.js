@@ -14,8 +14,8 @@ class Login extends Component {
       email: "",
       password: "",
       errors: {},
-      guestEmail: "guest@guest.com",
-      guestPassword: "guestguest",
+      guestEmail: "niloy@niloy.com",
+      guestPassword: "Niloyniloy10",
     };
   }
 
@@ -51,8 +51,8 @@ class Login extends Component {
   };
   guestLogin = () => {
     const userData = {
-      email: "guest@guest.com",
-      password: "guestguest",
+      email: "niloy@niloy.com",
+      password: "Niloyniloy10*",
     };
 
     this.props.loginUser(userData);

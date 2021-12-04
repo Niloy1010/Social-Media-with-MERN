@@ -36,14 +36,12 @@ class AddExperience extends Component {
     static getDerivedStateFromProps(nextProps,prevState){
         
         if(nextProps.errors) {
-            console.log("IN");
             return {
                 ...prevState,
                 errors: nextProps.errors
             }
         }
         else{
-            console.log("OUT");
             return {
                 ...prevState
             }

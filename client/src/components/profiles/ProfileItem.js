@@ -4,8 +4,6 @@ import isEmpty from "../../validation/is-empty";
 import styles from "./profile.module.css";
 const ProfileItem = (props) => {
   const { profile } = props;
-  console.log(profile);
-  //  console.log(profile.user.displayPicture);
   return (
     <div className={`card card-body ${styles.profileItem} mb-3`}>
       <div className="row">

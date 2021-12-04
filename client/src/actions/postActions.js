@@ -44,7 +44,6 @@ export const addPost = (postData) => (dispatch) => {
 //ADD IMAGE POST
 
 export const addImagePost = (postData) => (dispatch) => {
-  console.log(postData);
   axios
     .post("/api/posts/image", postData)
     .then((res) => {
@@ -86,7 +85,6 @@ export const deletePost = (id) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err.response.data);
       return dispatch({
         type: GET_ERRORS,
         payload: err.response.data,
@@ -221,7 +219,6 @@ export const addCommentToFeed = (id, comment, posts) => (dispatch) => {
   axios.post(`/api/posts/comment/${id}`, comment).then((res) => {
     const index = posts.findIndex((post) => post._id.toString() === id);
     let newPosts;
-    console.log(posts);
     if (index === 0) {
       newPosts = [res.data, ...posts.slice(1)];
     } else {
@@ -232,7 +229,6 @@ export const addCommentToFeed = (id, comment, posts) => (dispatch) => {
       ];
     }
 
-    console.log(newPosts);
     return dispatch({
       type: ADD_COMMENT,
       payload: newPosts,
@@ -246,7 +242,6 @@ export const deleteComment = (postid, commentid, posts) => (dispatch) => {
     .delete(`/api/posts/comment/${postid}/${commentid}`)
     .then((res) => {
       const index = posts.findIndex((post) => post._id.toString() === postid);
-      console.log(res.data);
       let newPosts;
       if (index === 0) {
         newPosts = [res.data, ...posts.slice(1)];

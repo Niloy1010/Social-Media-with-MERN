@@ -9,7 +9,6 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = keys;
 
 module.exports = (passport) => {
-  console.log(opts);
   passport.use(
     new JWTStrategy(opts, (jwt_payload, done) => {
       User.findById(jwt_payload.id)

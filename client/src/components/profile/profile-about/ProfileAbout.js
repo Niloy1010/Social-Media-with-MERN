@@ -7,7 +7,6 @@ const ProfileAbout = (props)=> {
 
     //Get first name
     const firstName = profile.user.name.trim().split(' ')[0];
-    console.log(firstName);
    
     const skills = profile.skills.map((skill,index)=> (
         <div key={index} className="p-3">

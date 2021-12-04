@@ -32,7 +32,6 @@ class NotificationItem extends Component {
     const curDate = new Date();
     const date = new Date(this.props.notification.date);
     let time = Math.floor((curDate.getTime() - date.getTime()) / 60000);
-    console.log(time);
 
     if (time <= 0) {
       time = "Just Now";

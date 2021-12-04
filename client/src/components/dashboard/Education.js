@@ -23,7 +23,6 @@ class Education extends Component {
                 <td><button onClick={this.onDeleteEducation.bind(edu._id)} className="btn btn-danger">Delete Education</button></td>
             </tr>
         ))
-        console.log(education);
         return (
             <div className="add-education">
                 <h4 className="mb-4">Education Credentials</h4>

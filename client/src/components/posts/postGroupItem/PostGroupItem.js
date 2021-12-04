@@ -19,7 +19,6 @@ class PostGroupItem extends Component {
   render() {
     const { user } = this.props.auth;
     let setInformation;
-    console.log(this.state.image);
     if (this.state.image) {
       setInformation = (
         <div style={{ textAlign: "center" }}>

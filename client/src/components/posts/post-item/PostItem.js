@@ -94,8 +94,12 @@ class PostItem extends Component {
       let profileProperty = profile.profiles.filter(
         (prof) => prof.user._id.toString() === post.user.toString()
       );
-      profileHandle = profileProperty[0].handle;
-      profileStatus = profileProperty[0].status;
+      profileHandle = profileProperty[0]?.handle
+        ? profileProperty[0].handle
+        : "";
+      profileStatus = profileProperty[0]?.status
+        ? profileProperty[0].status
+        : "";
     }
     return (
       <div>

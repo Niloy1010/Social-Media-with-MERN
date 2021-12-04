@@ -7,11 +7,9 @@ import ProfileItem from "./ProfileItem";
 
 class Profiles extends Component {
   componentDidMount() {
-    console.log(this.props.profile);
     this.props.getProfiles();
   }
   render() {
-    console.log(this.props.profile);
     const { profiles, loading } = this.props.profile;
     let profileItems;
     if (profiles === null || loading) {

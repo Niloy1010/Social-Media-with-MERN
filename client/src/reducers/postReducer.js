@@ -14,7 +14,6 @@ export default function(state = initialState, action) {
             posts: [action.payload, ...state.posts]
         }
     case DELETE_POST:
-        console.log(action.payload);
         return {
             ...state,
             posts : state.posts.filter(post => post._id != action.payload)

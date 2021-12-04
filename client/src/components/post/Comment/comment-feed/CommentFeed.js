@@ -20,7 +20,6 @@ const CommentFeed = (props) => {
     handleChange(comments.length);
   };
   function handleChange(value) {
-    console.log(value);
     if (commentNumber <= value) {
       setCommentNumber(commentNumber + 5);
     }

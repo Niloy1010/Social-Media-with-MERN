@@ -79,7 +79,6 @@ class EditProfile extends Component {
       profile.youtube = !isEmpty(profile.social.youtube)
         ? profile.social.youtube
         : "";
-      console.log(profile);
       //set component state
       this.setState({
         ...profile,

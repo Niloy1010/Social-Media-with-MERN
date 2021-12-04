@@ -44,7 +44,12 @@ class Navbar extends Component {
   render() {
     const { profile } = this.props;
 
-    const handle = profile?.profile?.handle;
+    let handle = profile?.profile?.handle;
+    if (handle) {
+      handle = handle.replace(/\//g, "");
+    } else {
+      handle = "niloyGuest";
+    }
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (

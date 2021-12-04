@@ -33,7 +33,6 @@ var storage = new GridFsStorage({
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
         if (err) {
-          console.log("Error");
           return reject(err);
         }
         const filename = buf.toString("hex") + path.extname(file.originalname);
@@ -94,7 +93,6 @@ router.post(
   (req, res) => {
     const { errors, isValid } = validatePostImageInput(req);
     if (!isValid) {
-      console.log("invalid");
       return res.status(400).json(errors);
     }
     const newPost = new Post({
@@ -255,8 +253,6 @@ router.post(
                   post
                     .save()
                     .then((post) => {
-                      console.log("Inside first condition");
-                      console.log(post.likes);
                       return res.json(post);
                     })
                     .catch((err) => res.status(400).json({ error: "Error" }));
@@ -268,7 +264,6 @@ router.post(
                     post
                       .save()
                       .then((post) => {
-                        console.log(post);
                         return res.json(post);
                       })
                       .catch((err) => res.status(400).json({ err: "Error" }));

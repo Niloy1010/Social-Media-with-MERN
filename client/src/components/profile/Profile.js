@@ -34,7 +34,6 @@ class Profile extends Component {
   // }
 
   componentDidMount() {
-    console.log(this.props.match.params.handle);
     if (this.props.match.params.handle) {
       this.props.getProfileByHandle(this.props.match.params.handle);
     }
@@ -42,7 +41,6 @@ class Profile extends Component {
   render() {
     const { profiles, loading, profile } = this.props.profile;
     const { auth } = this.props;
-    console.log(profile);
     let profileContent;
     if (profile === null || loading) {
       profileContent = <Spinner />;
