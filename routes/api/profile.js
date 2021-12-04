@@ -49,7 +49,7 @@ router.post(
         if (!profile) {
           Profile.findOne({ handle: req.body.handle }).then((profile) => {
             if (profile) {
-              errors.handle="Profile handle already exists";
+              errors.handle = "Profile handle already exists";
               return res.status(400).json(errors.handle);
             }
             new Profile(profileData).save().then((profile) => {
@@ -109,17 +109,22 @@ router.get(
 //@access public
 router.get("/handle/:handle", (req, res) => {
   errors = {};
+  let handle = req.params.handle;
+  if (handle) {
+    handle = handle.replace(/\//g, "");
+  } else {
+    handle = "niloyGuest";
+  }
   Profile.findOne({
-    handle: req.params.handle,
+    handle: handle,
   })
-  
-  .populate("user", ["name", "displayPicture"])
+    .populate("user", ["name", "displayPicture"])
     .then((profile) => {
       if (!profile) {
         errors.noProfile = "No profile found";
-        res.status(404).json(errors);
+        return res.status(404).json(errors);
       }
-      res.json(profile);
+      return res.json(profile);
     })
     .catch((err) => res.status(404).json({ noProfile: "No profile found" }));
 });
@@ -183,7 +188,7 @@ router.post(
           to: req.body.to,
           current: req.body.current,
           description: req.body.description,
-          current: req.body.current
+          current: req.body.current,
         };
 
         profile.experience.unshift(exp);

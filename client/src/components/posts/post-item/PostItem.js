@@ -100,6 +100,11 @@ class PostItem extends Component {
       profileStatus = profileProperty[0]?.status
         ? profileProperty[0].status
         : "";
+      if (profileHandle) {
+        profileHandle = profileHandle.replace(/\//g, "");
+      } else {
+        profileHandle = "niloyGuest";
+      }
     }
     return (
       <div>

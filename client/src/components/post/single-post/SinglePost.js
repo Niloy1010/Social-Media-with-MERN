@@ -81,6 +81,11 @@ class SinglePost extends Component {
       profileHandle = profileProperty[0].handle;
       profileStatus = profileProperty[0].status;
     }
+    if (profileHandle) {
+      profileHandle = profileHandle.replace(/\//g, "");
+    } else {
+      profileHandle = "niloyGuest";
+    }
     const showComment = !isEmpty(post) ? (
       <div className="row">
         {this.state.modalIsOpen ? (
