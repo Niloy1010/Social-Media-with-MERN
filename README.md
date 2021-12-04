@@ -10,7 +10,7 @@ cd client
 npm install
 ## Run both Express & React from roots
 
-npm run dev
+npm run social
 ## Build for production
 
 cd client
