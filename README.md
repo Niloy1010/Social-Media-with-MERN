@@ -7,6 +7,7 @@ npm install
 ## Install client dependencies
 
 cd client
+
 npm install
 ## Run both Express & React from roots
 
@@ -14,4 +15,5 @@ npm run social
 ## Build for production
 
 cd client
+
 npm run build
